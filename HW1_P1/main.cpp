@@ -53,8 +53,8 @@ int main(int argc, const char * argv[])
         }
     
     // Determine the resizing ratio
-    
-    double ratio = ((((double)Size)-1) / (((double)new_Size)-1));
+
+    float ratio = (Size-1.0) / (new_Size-1.0);
     
     cout << "bytes per pixel: " << BytesPerPixel << endl;
     cout << "original size: " << Size <<endl;
@@ -79,7 +79,7 @@ int main(int argc, const char * argv[])
     // Resizing via bilinear interpolation
     // The idea is to squeeze the size of output_array as the input_array.
     // According to the "squeezed position", calculate the element of each point.
-    
+
     unsigned char ImageOutput[new_Size][new_Size][BytesPerPixel];
     
     for (int x = 0; x < new_Size; x++) {
@@ -88,34 +88,29 @@ int main(int argc, const char * argv[])
                 
                 // The weight of neighbor points
                 
-                double a;
-                if ((int)floor(ratio*y) == (int)ceil(ratio*y)) {
-                    a = 1;
+                float a;
+                if ((int)floorf(ratio*y) == (int)ceilf(ratio*y)) {
+                    a = 1.0;
                 } else {
-                    a = (int)ceil(ratio*y) - ratio*y;
+                    a = ceilf(ratio*y) - ratio*y;
                 }
-                double b;
-                if ((int)floor(ratio*x) == (int)ceil(ratio*x)) {
-                    b = 1;
+                float b;
+                if ((int)floorf(ratio*x) == (int)ceilf(ratio*x)) {
+                    b = 1.0;
                 } else {
-                    b = (int)ceil(ratio*x) - ratio*x;
+                    b = ceilf(ratio*x) - ratio*x;
                 }
                 
-                // Debug only:
-                // cout << "(a,b)= (" << a << ","<< b << ")" << endl;
+                // To sum four neighbor components into one point
                 
-                double result_1 = round(a*b*Imagedata[(int)floor(ratio*x)][(int)floor(ratio*y)][channel]);
-                double result_2 = round((1.0-a)*b*(Imagedata[(int)floor(ratio*x)][(int)ceil(ratio*y)][channel]));
-                double result_3 = round(a*(1.0-b)*Imagedata[(int)ceil(ratio*x)][(int)floor(ratio*y)][channel]);
-                double result_4 = round((1.0-a)*(1.0-b)*Imagedata[(int)ceil(ratio*x)][(int)ceil(ratio*y)][channel]);
-
-                double result_all = round(result_1 + result_2 + result_3 + result_4);
+                float result_all =
+                (a*b*Imagedata[(int)floorf(ratio*x)][(int)floorf(ratio*y)][channel])
+                +((1.0-a)*b*Imagedata[(int)floorf(ratio*x)][(int)ceilf(ratio*y)][channel])
+                +(a*(1.0-b)*Imagedata[(int)ceilf(ratio*x)][(int)floorf(ratio*y)][channel])
+                +((1.0-a)*(1.0-b)*Imagedata[(int)ceilf(ratio*x)][(int)ceilf(ratio*y)][channel])
+                +0.5;
                 
-                ImageOutput[x][y][channel] = (unsigned char)result_all;
-                
-                // Debug only:
-                //cout << "(1,2,3,4,sum) = (" << result_1 << " " << result_2 << " "<< result_3 << " "<< result_4 << " "<< result_all << ")"<<endl;
-                //cout<< "output_array[" << x << "][" << y << "]["<< channel << "]:" << round(ImageOutput[x][y][channel]) << endl;
+                ImageOutput[x][y][channel] = static_cast<unsigned char>(result_all*0.8);            //Bug: can work only this way
             }
         }
     }
@@ -123,7 +118,7 @@ int main(int argc, const char * argv[])
     // Save the output_array into output image by fwrite(), the parameters are similar to fread()
     
     FILE *new_file;
-    if (!(new_file=fopen(argv[2],"wt"))) {
+    if (!(new_file=fopen(argv[2],"wb"))) {
         cout << "Error: unable to save file" << endl;
         exit(1);
     }
