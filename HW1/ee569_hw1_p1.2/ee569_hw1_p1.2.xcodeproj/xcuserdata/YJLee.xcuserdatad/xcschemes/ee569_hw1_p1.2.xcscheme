@@ -64,7 +64,7 @@
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "&quot;/Users/YJLee/Desktop/parrot_CFA_new.raw&quot;"
+            argument = "&quot;/Users/YJLee/Desktop/parrot_bl.raw&quot;"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>

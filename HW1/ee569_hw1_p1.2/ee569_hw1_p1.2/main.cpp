@@ -28,7 +28,7 @@ int main(int argc, const char * argv[])
     cout << "Argument count: " << argc << endl;
     
     // argv[1] = "/Users/YJLee/Desktop/parrot_CFA.raw"
-    // argv[2] = "/Users/YJLee/Desktop/parrot_CFA_new.raw"
+    // argv[2] = "/Users/YJLee/Desktop/parrot_bl.raw"
     
     // Check for proper syntax
     
@@ -61,28 +61,28 @@ int main(int argc, const char * argv[])
     // "Pre-treat" the image before interpolation:
     // extend the edge of original image with imaginary boundaries, which is needed in further interpolation operations
     
-    unsigned char Imagedata_treated[height+2][width+2][1];
+    unsigned char ImageAddFrame[height+2][width+2][1];
     
     // it's as same as original data except boundaries
     for (int i=0; i<height; i++) {
         for (int j=0; j<width; j++) {
-            Imagedata_treated[i+1][j+1][0] = Imagedata[i][j][0];
+            ImageAddFrame[i+1][j+1][0] = Imagedata[i][j][0];
         }
     }
     
     // copy upper and lower boundaries
     for (int j=0; j<width; j++) {
-        Imagedata_treated[0][j+1][0] =  Imagedata[0][j][0];
-        Imagedata_treated[height+1][j+1][0] = Imagedata[height-1][j][0];
+        ImageAddFrame[0][j+1][0] =  Imagedata[0][j][0];
+        ImageAddFrame[height+1][j+1][0] = Imagedata[height-1][j][0];
     }
     
     // copy left and right boundaries from itself
     for (int i=0; i<(height+2); i++) {
-        Imagedata_treated[i][0][0] = Imagedata_treated[i][1][0];
-        Imagedata_treated[i][width+1][0] = Imagedata_treated[i][width][0];
+        ImageAddFrame[i][0][0] = ImageAddFrame[i][1][0];
+        ImageAddFrame[i][width+1][0] = ImageAddFrame[i][width][0];
     }
     
-    // Resizing via bilinear interpolation
+    // Bilinear Demosaicing - construct RGB value of each pixel according to Bayer pattern
     // The reconstructed color value is computed as the average of its two or four adjacent pixels of the same color.
     
     unsigned char ImageOutput[height][width][BytesPerPixel];
@@ -90,33 +90,33 @@ int main(int argc, const char * argv[])
     // Construct "Red Pixel Points"
     for (int y = 0; y <= height; y+=2) {
         for (int x= 0; x <= width; x+=2) {
-            ImageOutput[y][x][0] = (unsigned char)round(Imagedata_treated[y+1][x+1][0]);
-            ImageOutput[y][x][1] = (unsigned char)round((0.25)*(Imagedata_treated[y][x+1][0]+Imagedata_treated[y+2][x+1][0]+Imagedata_treated[y+1][x][0]+Imagedata_treated[y+1][x+2][0]));
-            ImageOutput[y][x][2] = (unsigned char)round((0.25)*(Imagedata_treated[y][x][0]+Imagedata_treated[y+2][x][0]+Imagedata_treated[y][x+2][0]+Imagedata_treated[y+2][x+2][0]));
+            ImageOutput[y][x][0] = (unsigned char)round(ImageAddFrame[y+1][x+1][0]);
+            ImageOutput[y][x][1] = (unsigned char)round((0.25)*(ImageAddFrame[y][x+1][0]+ImageAddFrame[y+2][x+1][0]+ImageAddFrame[y+1][x][0]+ImageAddFrame[y+1][x+2][0]));
+            ImageOutput[y][x][2] = (unsigned char)round((0.25)*(ImageAddFrame[y][x][0]+ImageAddFrame[y+2][x][0]+ImageAddFrame[y][x+2][0]+ImageAddFrame[y+2][x+2][0]));
         }
     }
     
     // Construct "Green Pixel Points"
     for (int y = 0; y <= height; y+=2) {
         for (int x= 1; x <= width; x+=2) {
-            ImageOutput[y][x][0] = (unsigned char)round((0.5)*(Imagedata_treated[y+1][x][0]+Imagedata_treated[y+1][x+2][0]));
-            ImageOutput[y][x][1] = (unsigned char)round(Imagedata_treated[y+1][x+1][0]);
-            ImageOutput[y][x][2] = (unsigned char)round((0.5)*(Imagedata_treated[y][x+1][0]+Imagedata_treated[y+2][x+1][0]));
+            ImageOutput[y][x][0] = (unsigned char)round((0.5)*(ImageAddFrame[y+1][x][0]+ImageAddFrame[y+1][x+2][0]));
+            ImageOutput[y][x][1] = (unsigned char)round(ImageAddFrame[y+1][x+1][0]);
+            ImageOutput[y][x][2] = (unsigned char)round((0.5)*(ImageAddFrame[y][x+1][0]+ImageAddFrame[y+2][x+1][0]));
         }
     }
     for (int y = 1; y <= height; y+=2) {
         for (int x= 0; x <= width; x+=2) {
-            ImageOutput[y][x][0] = (unsigned char)round((0.5)*(Imagedata_treated[y][x+1][0]+Imagedata_treated[y+2][x+1][0]));
-            ImageOutput[y][x][1] = (unsigned char)round(Imagedata_treated[y+1][x+1][0]);
-            ImageOutput[y][x][2] = (unsigned char)round((0.5)*(Imagedata_treated[y+1][x][0]+Imagedata_treated[y+1][x+2][0]));        }
+            ImageOutput[y][x][0] = (unsigned char)round((0.5)*(ImageAddFrame[y][x+1][0]+ImageAddFrame[y+2][x+1][0]));
+            ImageOutput[y][x][1] = (unsigned char)round(ImageAddFrame[y+1][x+1][0]);
+            ImageOutput[y][x][2] = (unsigned char)round((0.5)*(ImageAddFrame[y+1][x][0]+ImageAddFrame[y+1][x+2][0]));        }
     }
     
     // Construct "Blue Pixel Points"
     for (int y = 1; y <= height; y+=2) {
         for (int x= 1; x <= width; x+=2) {
-            ImageOutput[y][x][0] = (unsigned char)round((0.25)*(Imagedata_treated[y][x][0]+Imagedata_treated[y+2][x][0]+Imagedata_treated[y][x+2][0]+Imagedata_treated[y+2][x+2][0]));
-            ImageOutput[y][x][1] = (unsigned char)round((0.25)*(Imagedata_treated[y][x+1][0]+Imagedata_treated[y+2][x+1][0]+Imagedata_treated[y+1][x][0]+Imagedata_treated[y+1][x+2][0]));
-            ImageOutput[y][x][2] = (unsigned char)round(Imagedata_treated[y+1][x+1][0]);
+            ImageOutput[y][x][0] = (unsigned char)round((0.25)*(ImageAddFrame[y][x][0]+ImageAddFrame[y+2][x][0]+ImageAddFrame[y][x+2][0]+ImageAddFrame[y+2][x+2][0]));
+            ImageOutput[y][x][1] = (unsigned char)round((0.25)*(ImageAddFrame[y][x+1][0]+ImageAddFrame[y+2][x+1][0]+ImageAddFrame[y+1][x][0]+ImageAddFrame[y+1][x+2][0]));
+            ImageOutput[y][x][2] = (unsigned char)round(ImageAddFrame[y+1][x+1][0]);
         }
     }
 
@@ -129,7 +129,7 @@ int main(int argc, const char * argv[])
         exit(1);
     }
     
-    fwrite(ImageOutput, sizeof(unsigned char), (height)*(width)*BytesPerPixel, new_file);
+    fwrite(ImageAddFrame, sizeof(unsigned char), (height+2)*(width+2)*BytesPerPixel, new_file);
     fclose(new_file);
     cout << "Scaled image successfully saved" <<endl;
     
