@@ -3,7 +3,7 @@
 //  HW1_P1.2
 //
 //  Bilinear Demosaicing
-//  Implement bilinear demosaicing and apply it to the Parrot image
+//  Implement bilinear demosaicing and apply it to the 424x636 Parrot image
 //
 //  Created by Yun-Jun Lee on 8/31/15.
 //  Copyright (c) 2015 USC. All rights reserved.
@@ -37,13 +37,10 @@ int main(int argc, const char * argv[])
         cout << "program_name input_image.raw output_image.raw" << endl;
         return 0;
     }
-    
-    cout << "input bytes per pixel: " << BytesPerPixel << endl;
     cout << "original width: " << width <<endl;
     cout << "original height: " << height <<endl;
     
     // Read the image contents by fread(ptr,width,count,fp)
-    
     unsigned char Imagedata[height][width][1];
     
     if (!(file=fopen(argv[1],"rb"))) {
@@ -57,13 +54,11 @@ int main(int argc, const char * argv[])
     fread(Imagedata, sizeof(unsigned char), height*width*1, file);
     fclose(file);
 
-    
     // "Pre-treat" the image before interpolation:
     // extend the edge of original image with imaginary boundaries, which is needed in further interpolation operations
     
     unsigned char ImageAddFrame[height+2][width+2][1];
     
-    // it's as same as original data except boundaries
     for (int i=0; i<height; i++) {
         for (int j=0; j<width; j++) {
             ImageAddFrame[i+1][j+1][0] = Imagedata[i][j][0];
@@ -120,7 +115,6 @@ int main(int argc, const char * argv[])
     }
     
     // Save the output_array into output image by fwrite(), the parameters are similar to fread()
-    
     FILE *new_file;
     if (!(new_file=fopen(argv[2],"wb"))) {
         cout << "Error: unable to save file" << endl;
@@ -129,7 +123,7 @@ int main(int argc, const char * argv[])
     
     fwrite(ImageOutput, sizeof(unsigned char), (height)*(width)*BytesPerPixel, new_file);
     fclose(new_file);
-    cout << "Scaled image successfully saved" <<endl;
+    cout << "Bi-linear demosaic image successfully saved" <<endl;
     
     return 0;
 }
