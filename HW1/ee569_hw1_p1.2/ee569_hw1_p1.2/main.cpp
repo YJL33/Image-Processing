@@ -69,13 +69,11 @@ int main(int argc, const char * argv[])
             ImageAddFrame[i+1][j+1][0] = Imagedata[i][j][0];
         }
     }
-    
     // copy upper and lower boundaries
     for (int j=0; j<width; j++) {
-        ImageAddFrame[0][j+1][0] =  Imagedata[0][j][0];
+        ImageAddFrame[0][j+1][0] = Imagedata[0][j][0];
         ImageAddFrame[height+1][j+1][0] = Imagedata[height-1][j][0];
     }
-    
     // copy left and right boundaries from itself
     for (int i=0; i<(height+2); i++) {
         ImageAddFrame[i][0][0] = ImageAddFrame[i][1][0];
@@ -88,38 +86,38 @@ int main(int argc, const char * argv[])
     unsigned char ImageOutput[height][width][BytesPerPixel];
     
     // Construct "Red Pixel Points"
-    for (int y = 0; y <= height; y+=2) {
-        for (int x= 0; x <= width; x+=2) {
-            ImageOutput[y][x][0] = (unsigned char)round(ImageAddFrame[y+1][x+1][0]);
-            ImageOutput[y][x][1] = (unsigned char)round((0.25)*(ImageAddFrame[y][x+1][0]+ImageAddFrame[y+2][x+1][0]+ImageAddFrame[y+1][x][0]+ImageAddFrame[y+1][x+2][0]));
-            ImageOutput[y][x][2] = (unsigned char)round((0.25)*(ImageAddFrame[y][x][0]+ImageAddFrame[y+2][x][0]+ImageAddFrame[y][x+2][0]+ImageAddFrame[y+2][x+2][0]));
+    for (int y = 0; y <= height-1; y+=2) {
+        for (int x= 0; x <= width-1; x+=2) {
+            ImageOutput[y][x][0] = (unsigned char)roundf(ImageAddFrame[(y+1)][x+1][0]);
+            ImageOutput[y][x][1] = (unsigned char)roundf((0.25)*(ImageAddFrame[y][x+1][0]+ImageAddFrame[y+2][x+1][0]+ImageAddFrame[y+1][x][0]+ImageAddFrame[y+1][x+2][0]));
+            ImageOutput[y][x][2] = (unsigned char)roundf((0.25)*(ImageAddFrame[y][x][0]+ImageAddFrame[y+2][x][0]+ImageAddFrame[y][x+2][0]+ImageAddFrame[y+2][x+2][0]));
         }
     }
     
     // Construct "Green Pixel Points"
-    for (int y = 0; y <= height; y+=2) {
-        for (int x= 1; x <= width; x+=2) {
-            ImageOutput[y][x][0] = (unsigned char)round((0.5)*(ImageAddFrame[y+1][x][0]+ImageAddFrame[y+1][x+2][0]));
-            ImageOutput[y][x][1] = (unsigned char)round(ImageAddFrame[y+1][x+1][0]);
-            ImageOutput[y][x][2] = (unsigned char)round((0.5)*(ImageAddFrame[y][x+1][0]+ImageAddFrame[y+2][x+1][0]));
+    for (int y = 0; y <= height-1; y+=2) {
+        for (int x= 1; x <= width-1; x+=2) {
+            ImageOutput[y][x][0] = (unsigned char)roundf((0.5)*(ImageAddFrame[y+1][x][0]+ImageAddFrame[y+1][x+2][0]));
+            ImageOutput[y][x][1] = (unsigned char)roundf(ImageAddFrame[y+1][x+1][0]);
+            ImageOutput[y][x][2] = (unsigned char)roundf((0.5)*(ImageAddFrame[y][x+1][0]+ImageAddFrame[y+2][x+1][0]));
         }
     }
-    for (int y = 1; y <= height; y+=2) {
-        for (int x= 0; x <= width; x+=2) {
-            ImageOutput[y][x][0] = (unsigned char)round((0.5)*(ImageAddFrame[y][x+1][0]+ImageAddFrame[y+2][x+1][0]));
-            ImageOutput[y][x][1] = (unsigned char)round(ImageAddFrame[y+1][x+1][0]);
-            ImageOutput[y][x][2] = (unsigned char)round((0.5)*(ImageAddFrame[y+1][x][0]+ImageAddFrame[y+1][x+2][0]));        }
+    for (int y = 1; y <= height-1; y+=2) {
+        for (int x= 0; x <= width-1; x+=2) {
+            ImageOutput[y][x][0] = (unsigned char)roundf((0.5)*(ImageAddFrame[y][x+1][0]+ImageAddFrame[y+2][x+1][0]));
+            ImageOutput[y][x][1] = (unsigned char)roundf(ImageAddFrame[y+1][x+1][0]);
+            ImageOutput[y][x][2] = (unsigned char)roundf((0.5)*(ImageAddFrame[y+1][x][0]+ImageAddFrame[y+1][x+2][0]));
+        }
     }
     
     // Construct "Blue Pixel Points"
-    for (int y = 1; y <= height; y+=2) {
-        for (int x= 1; x <= width; x+=2) {
-            ImageOutput[y][x][0] = (unsigned char)round((0.25)*(ImageAddFrame[y][x][0]+ImageAddFrame[y+2][x][0]+ImageAddFrame[y][x+2][0]+ImageAddFrame[y+2][x+2][0]));
-            ImageOutput[y][x][1] = (unsigned char)round((0.25)*(ImageAddFrame[y][x+1][0]+ImageAddFrame[y+2][x+1][0]+ImageAddFrame[y+1][x][0]+ImageAddFrame[y+1][x+2][0]));
-            ImageOutput[y][x][2] = (unsigned char)round(ImageAddFrame[y+1][x+1][0]);
+    for (int y = 1; y <= height-1; y+=2) {
+        for (int x= 1; x <= width-1; x+=2) {
+            ImageOutput[y][x][0] = (unsigned char)roundf((0.25)*(ImageAddFrame[y][x][0]+ImageAddFrame[y+2][x][0]+ImageAddFrame[y][x+2][0]+ImageAddFrame[y+2][x+2][0]));
+            ImageOutput[y][x][1] = (unsigned char)roundf((0.25)*(ImageAddFrame[y][x+1][0]+ImageAddFrame[y+2][x+1][0]+ImageAddFrame[y+1][x][0]+ImageAddFrame[y+1][x+2][0]));
+            ImageOutput[y][x][2] = (unsigned char)roundf(ImageAddFrame[y+1][x+1][0]);
         }
     }
-
     
     // Save the output_array into output image by fwrite(), the parameters are similar to fread()
     
@@ -129,7 +127,7 @@ int main(int argc, const char * argv[])
         exit(1);
     }
     
-    fwrite(ImageAddFrame, sizeof(unsigned char), (height+2)*(width+2)*BytesPerPixel, new_file);
+    fwrite(ImageOutput, sizeof(unsigned char), (height)*(width)*BytesPerPixel, new_file);
     fclose(new_file);
     cout << "Scaled image successfully saved" <<endl;
     
