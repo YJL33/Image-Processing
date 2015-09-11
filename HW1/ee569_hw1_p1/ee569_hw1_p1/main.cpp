@@ -70,7 +70,7 @@ int main(int argc, const char * argv[])
         exit(1);
     }
     else {
-        cout << "Image successfully loaded" <<endl;
+        cout << "Image is successfully loaded" <<endl;
     }
     
     fread(Imagedata, sizeof(unsigned char), Size*Size*BytesPerPixel, file);
@@ -108,7 +108,6 @@ int main(int argc, const char * argv[])
                 +((1.0-a)*b*Imagedata[(int)floorf(ratio*x)][(int)ceilf(ratio*y)][channel])
                 +(a*(1.0-b)*Imagedata[(int)ceilf(ratio*x)][(int)floorf(ratio*y)][channel])
                 +((1.0-a)*(1.0-b)*Imagedata[(int)ceilf(ratio*x)][(int)ceilf(ratio*y)][channel])));
-                
             }
         }
     }
@@ -123,7 +122,11 @@ int main(int argc, const char * argv[])
     
     fwrite(ImageOutput, sizeof(unsigned char), new_Size*new_Size*BytesPerPixel, new_file);
     fclose(new_file);
-    cout << "Scaled image successfully saved" <<endl;
+    cout << "Scaled image is successfully saved" <<endl;
+    
+    // Clear memory
+    memset(Imagedata, 0, sizeof(Imagedata));
+    memset(ImageOutput, 0, sizeof(ImageOutput));
     
     return 0;
 }

@@ -23,10 +23,7 @@ int main(int argc, const char * argv[])
     int width = 424;
     int height = 636;
     int BytesPerPixel = 3;
-    
-    // Define the filters
-    unsigned char greenFilterAtRed(int x, int y, int (&arr)[640][428][1]);
-    
+        
     // argv[1] = "/Users/YJLee/Desktop/parrot_CFA.raw"
     // argv[2] = "/Users/YJLee/Desktop/parrot_MHC.raw"
     
@@ -47,7 +44,7 @@ int main(int argc, const char * argv[])
         exit(1);
     }
     else {
-        cout << "Image successfully loaded" <<endl;
+        cout << "Image successfully is loaded" <<endl;
     }
     fread(Imagedata, sizeof(unsigned char), height*width*1, file);
     fclose(file);
@@ -184,10 +181,12 @@ int main(int argc, const char * argv[])
     
     fwrite(Image2ndOrder, sizeof(unsigned char), (height)*(width)*BytesPerPixel, new_file);
     fclose(new_file);
-    cout << "MHC demosaic image successfully saved" <<endl;
+    cout << "MHC demosaic image is successfully saved" <<endl;
     
     //Clear the memory
+    memset(Imagedata, 0, sizeof(Imagedata));
     memset(ImageAddFrame, 0, sizeof(ImageAddFrame));
-    
+    memset(Image2ndOrder, 0, sizeof(Image2ndOrder));
+
     return 0;
 }

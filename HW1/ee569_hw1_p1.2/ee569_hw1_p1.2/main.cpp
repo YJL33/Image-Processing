@@ -48,7 +48,7 @@ int main(int argc, const char * argv[])
         exit(1);
     }
     else {
-        cout << "Image successfully loaded" <<endl;
+        cout << "Image successfully is loaded" <<endl;
     }
     
     fread(Imagedata, sizeof(unsigned char), height*width*1, file);
@@ -123,7 +123,12 @@ int main(int argc, const char * argv[])
     
     fwrite(ImageOutput, sizeof(unsigned char), (height)*(width)*BytesPerPixel, new_file);
     fclose(new_file);
-    cout << "Bi-linear demosaic image successfully saved" <<endl;
+    cout << "Bi-linear demosaic image is successfully saved" <<endl;
+    
+    // Clear memory
+    memset(Imagedata, 0, sizeof(Imagedata));
+    memset(ImageAddFrame, 0, sizeof(ImageAddFrame));
+    memset(ImageOutput, 0, sizeof(ImageOutput));
     
     return 0;
 }
