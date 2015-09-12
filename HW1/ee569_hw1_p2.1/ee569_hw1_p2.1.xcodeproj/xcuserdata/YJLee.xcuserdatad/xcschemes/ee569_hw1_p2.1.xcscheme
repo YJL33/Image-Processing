@@ -67,6 +67,14 @@
             argument = "&quot;/Users/YJLee/Desktop/jet_methodA.raw&quot;"
             isEnabled = "YES">
          </CommandLineArgument>
+         <CommandLineArgument
+            argument = "&quot;/Users/YJLee/Desktop/jet_histA.txt&quot;"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "&quot;/Users/YJLee/Desktop/jet_cdfA.txt&quot;"
+            isEnabled = "YES">
+         </CommandLineArgument>
       </CommandLineArguments>
       <AdditionalOptions>
       </AdditionalOptions>
