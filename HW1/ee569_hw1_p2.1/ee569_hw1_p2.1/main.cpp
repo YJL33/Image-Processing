@@ -2,12 +2,12 @@
 //  main.cpp
 //  ee569_hw1_p2.1
 //
-//  Method 1
+//  Method A
 //  Using the transfer-function-based histogram equalization method to enhance the contrast of the 512x512 24bit RGB Jet image
 //
 //  Output:
 //  No. of pixels in each RGB values (txt), argv[3]
-//  Cumulative Distribution Function (txt), argv[4]
+//  Transfer Function (txt), argv[4]
 //  Enhanced Image (raw), argv[2]
 //
 //  Created by Yun-Jun Lee on 9/3/15.
@@ -29,12 +29,12 @@ int main(int argc, const char * argv[])
     int Size = 512;
     int BytesPerPixel = 3;
     int PixelCountOfColorLevel[3][256] = {0};        // Count of pixels equal to same single value(0~255) in each channel
-    double CDF[BytesPerPixel][ColorSpan];      // Cumulative Distribution Function
+    int TransferFunction[3][256];      // Transfer Function
     
     // argv[1] = "/Users/YJLee/Desktop/jet.raw"
-    // argv[2] = "/Users/YJLee/Desktop/jet_methodA.raw"
-    // argv[3] = "/Users/YJLee/Desktop/jet_histA.txt"
-    // argv[4] = "/Users/YJLee/Desktop/jet_cphistA.txt"
+    // argv[2] = "/Users/YJLee/Desktop/jet_A.raw"
+    // argv[3] = "/Users/YJLee/Desktop/jet_hist_A.txt"
+    // argv[4] = "/Users/YJLee/Desktop/jet_TF_A.txt"
     
     // Check for proper syntax
     cout << "Argument count: " << argc << endl;
@@ -68,60 +68,58 @@ int main(int argc, const char * argv[])
             }
         }
     }
-    FILE * file_hist;
-    if (!(file_hist = fopen(argv[3], "w"))) {
+    if (!(file = fopen(argv[3], "w"))) {
         cout << "Error: unable to save txt file" << endl;
         }
-    fprintf(file_hist, "RGB,ColorSpan,Count\n");
-    for (int i = 0; i < BytesPerPixel; i++){
-        for(int j = 0;j < 256; j++){
-            fprintf(file_hist, "%d,%d,%d\n", i, j, PixelCountOfColorLevel[i][j]);
+    fprintf(file, "RGB,ColorSpan,Count\n");
+    for (int channel = 0; channel < BytesPerPixel; channel++){
+        for(int colorvalue = 0; colorvalue <= ColorSpan; colorvalue++){
+            fprintf(file, "%d,%d,%d\n", channel, colorvalue, PixelCountOfColorLevel[channel][colorvalue]);
         }
     }
-    fclose(file_hist);
+    fclose(file);
     
-    // 2nd Step: Calculate the cumulative distribution function (c.d.f.) from the normalized probability distribution,
-    // which can be derived from Pixel counts of each color level/Total pixel number.
+    // 2nd Step: Calculate the Transfer Function from the cumulative probability,
+    // which can be derived from probability distribution(Pixel counts of each color level/Total pixel number).
+    // The Transfer Function will be "cumulative probability" * "color span"
     
     for(int channel = 0;channel < BytesPerPixel;channel++){
         double CumulativeProb = 0.0;      //Cumulative Probability of each single color value (0~255) in each channel
-        for(int i = 0;i < ColorSpan;i ++){
-            CumulativeProb += (double)PixelCountOfColorLevel[channel][i]/(double)(Size*Size);
-            CDF[channel][i] = CumulativeProb;
+        for(int colorvalue = 0; colorvalue <= ColorSpan; colorvalue ++){
+            CumulativeProb += (double)(PixelCountOfColorLevel[channel][colorvalue]/(double)(Size*Size));
+            TransferFunction[channel][colorvalue] = floor(CumulativeProb*ColorSpan);
         }
     }
-    FILE * file_hist_CDF;
-    if (!(file_hist_CDF = fopen(argv[4], "w"))) {
+    if (!(file = fopen(argv[4], "w"))) {
         cout << "Error: unable to save txt file" << endl;
     }
-    fprintf(file_hist_CDF, "RGB,ColorSpan,Count\n");
-    for (int i = 0; i < BytesPerPixel; i++){
-        for(int j = 0;j < 256; j++){
-            fprintf(file_hist_CDF, "%d,%d,%f\n", i, j, CDF[i][j]);
+    fprintf(file, "Old RGB,ColorSpan,New RGB\n");
+    for (int channel = 0; channel < BytesPerPixel; channel++){
+        for(int colorvalue = 0; colorvalue <= ColorSpan; colorvalue++){
+            fprintf(file, "%d,%d,%d\n", channel, colorvalue, TransferFunction[channel][colorvalue]);
         }
     }
-    fclose(file_hist_CDF);
-
+    fclose(file);
+    
     // 3rd Step: Map the c.d.f. into 0~255 distribution, and rewrite the RGB values as output image.
-    // New RGB Value should be "the original RGB Value's cumulative probability" * "Color Span"
+    // New RGB Value will be generated from transfer function, by input the original RGB Value.
     unsigned char ImageOutput[Size][Size][BytesPerPixel];
     
     for (int i = 0; i < Size; i++) {
         for (int j = 0; j < Size; j++) {
             for (int channel = 0; channel < BytesPerPixel; channel++) {
-                ImageOutput[i][j][channel] = (unsigned char)floor(CDF[channel][Imagedata[i][j][channel]]*ColorSpan);
+                ImageOutput[i][j][channel] = (unsigned char)(TransferFunction[channel][Imagedata[i][j][channel]]);
             }
         }
     }
     // Save the output_array into output image by fwrite(), the parameters are similar to fread()
-    FILE *new_file;
-    if (!(new_file=fopen(argv[2],"wb"))) {
+    if (!(file=fopen(argv[2],"wb"))) {
         cout << "Error: unable to save img file" << endl;
         exit(1);
     }
     
-    fwrite(ImageOutput, sizeof(unsigned char), (Size)*(Size)*BytesPerPixel, new_file);
-    fclose(new_file);
+    fwrite(ImageOutput, sizeof(unsigned char), (Size)*(Size)*BytesPerPixel, file);
+    fclose(file);
     cout << "Contrast adjusted image successfully saved" <<endl;
     
     //Clear the memory
