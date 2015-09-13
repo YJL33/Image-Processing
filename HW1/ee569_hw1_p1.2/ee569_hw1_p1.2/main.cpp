@@ -37,9 +37,7 @@ int main(int argc, const char * argv[])
         cout << "program_name input_image.raw output_image.raw" << endl;
         return 0;
     }
-    cout << "original width: " << width <<endl;
-    cout << "original height: " << height <<endl;
-    
+
     // Read the image contents by fread(ptr,width,count,fp)
     unsigned char Imagedata[height][width][1];
     
@@ -50,7 +48,6 @@ int main(int argc, const char * argv[])
     else {
         cout << "Image successfully is loaded" <<endl;
     }
-    
     fread(Imagedata, sizeof(unsigned char), height*width*1, file);
     fclose(file);
 
@@ -59,20 +56,20 @@ int main(int argc, const char * argv[])
     
     unsigned char ImageAddFrame[height+2][width+2][1];
     
-    for (int i=0; i<height; i++) {
-        for (int j=0; j<width; j++) {
-            ImageAddFrame[i+1][j+1][0] = Imagedata[i][j][0];
+    for (int y=0; y<height; y++) {
+        for (int x=0; x<width; x++) {
+            ImageAddFrame[y+1][x+1][0] = Imagedata[y][x][0];
         }
     }
     // copy upper and lower boundaries
-    for (int j=0; j<width; j++) {
-        ImageAddFrame[0][j+1][0] = Imagedata[0][j][0];
-        ImageAddFrame[height+1][j+1][0] = Imagedata[height-1][j][0];
+    for (int x=0; x<width; x++) {
+        ImageAddFrame[0][x+1][0] = Imagedata[0][x][0];
+        ImageAddFrame[height+1][width+1][0] = Imagedata[height-1][x][0];
     }
     // copy left and right boundaries from itself
-    for (int i=0; i<(height+2); i++) {
-        ImageAddFrame[i][0][0] = ImageAddFrame[i][1][0];
-        ImageAddFrame[i][width+1][0] = ImageAddFrame[i][width][0];
+    for (int y=0; y<(height+2); y++) {
+        ImageAddFrame[y][0][0] = ImageAddFrame[y][1][0];
+        ImageAddFrame[y][width+1][0] = ImageAddFrame[y][width][0];
     }
     
     // Bilinear Demosaicing - construct RGB value of each pixel according to Bayer pattern
@@ -115,14 +112,13 @@ int main(int argc, const char * argv[])
     }
     
     // Save the output_array into output image by fwrite(), the parameters are similar to fread()
-    FILE *new_file;
-    if (!(new_file=fopen(argv[2],"wb"))) {
+    if (!(file=fopen(argv[2],"wb"))) {
         cout << "Error: unable to save file" << endl;
         exit(1);
     }
     
-    fwrite(ImageOutput, sizeof(unsigned char), (height)*(width)*BytesPerPixel, new_file);
-    fclose(new_file);
+    fwrite(ImageOutput, sizeof(unsigned char), (height)*(width)*BytesPerPixel, file);
+    fclose(file);
     cout << "Bi-linear demosaic image is successfully saved" <<endl;
     
     // Clear memory

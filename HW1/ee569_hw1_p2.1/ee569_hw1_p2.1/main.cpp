@@ -40,7 +40,7 @@ int main(int argc, const char * argv[])
     cout << "Argument count: " << argc << endl;
     if (argc < 5){
         cout << "Syntax Error - Incorrect Parameter Usage:" << endl;
-        cout << "program_name input_image.raw output_image.raw output_hist.txt" << endl;
+        cout << "program_name input_image.raw output_image.raw input_hist.txt output_hist.txt" << endl;
         return 0;
     }
     
@@ -61,10 +61,10 @@ int main(int argc, const char * argv[])
     // 1st Step: Read count all RGB values from 0~255 of each pixels, then output the result to plot histogram.
     // e.g. R=0, count=15 pixels, ... G=24, count=52 pixels,...etc.
     
-    for (int i = 0; i < Size; i ++) {
-        for(int j = 0; j < Size; j++) {
+    for (int y = 0; y < Size; y ++) {
+        for(int x = 0; x < Size; x++) {
             for(int channel = 0; channel < BytesPerPixel; channel++) {
-                PixelCountOfColorLevel[channel][(unsigned char)round(Imagedata[i][j][channel])]++;
+                PixelCountOfColorLevel[channel][(unsigned char)round(Imagedata[y][x][channel])]++;
             }
         }
     }

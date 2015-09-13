@@ -64,15 +64,15 @@
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "&quot;/Users/YJLee/Desktop/jet_method_A.raw&quot;"
+            argument = "&quot;/Users/YJLee/Desktop/jet_B.raw&quot;"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "&quot;/Users/YJLee/Desktop/jet_hist_A.txt&quot;"
+            argument = "&quot;/Users/YJLee/Desktop/jet_hist_before_B.txt&quot;"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "&quot;/Users/YJLee/Desktop/jet_TF_A.txt&quot;"
+            argument = "&quot;/Users/YJLee/Desktop/jet_hist_after_B.txt&quot;"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>

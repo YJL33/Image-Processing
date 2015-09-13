@@ -67,6 +67,18 @@
             argument = "&quot;/Users/YJLee/Desktop/the_starry_night_scaled.raw&quot;"
             isEnabled = "YES">
          </CommandLineArgument>
+         <CommandLineArgument
+            argument = "3"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "512"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "650"
+            isEnabled = "YES">
+         </CommandLineArgument>
       </CommandLineArguments>
       <AdditionalOptions>
       </AdditionalOptions>

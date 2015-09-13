@@ -24,6 +24,7 @@ int main(int argc, const char * argv[])
     int Size = 512;
     int new_Size = 650;
     int BytesPerPixel;
+    float ratio = (Size-1.0) / (new_Size-1.0); // the resizing ratio
     
     cout << "Argument count: " << argc << endl;
     
@@ -46,15 +47,10 @@ int main(int argc, const char * argv[])
         BytesPerPixel = atoi(argv[3]);
         // Check if size is specified
     }
-    
     if (argc >= 5){
         Size = atoi(argv[4]);
         new_Size = atoi(argv[5]);
     }
-    
-    // Determine the resizing ratio
-    
-    float ratio = (Size-1.0) / (new_Size-1.0);
     
     cout << "bytes per pixel: " << BytesPerPixel << endl;
     cout << "original size: " << Size <<endl;
@@ -113,15 +109,13 @@ int main(int argc, const char * argv[])
     }
     
     // Save the output_array into output image by fwrite(), the parameters are similar to fread()
-    
-    FILE *new_file;
-    if (!(new_file=fopen(argv[2],"wb"))) {
+    if (!(file=fopen(argv[2],"wb"))) {
         cout << "Error: unable to save file" << endl;
         exit(1);
     }
     
-    fwrite(ImageOutput, sizeof(unsigned char), new_Size*new_Size*BytesPerPixel, new_file);
-    fclose(new_file);
+    fwrite(ImageOutput, sizeof(unsigned char), new_Size*new_Size*BytesPerPixel, file);
+    fclose(file);
     cout << "Scaled image is successfully saved" <<endl;
     
     // Clear memory

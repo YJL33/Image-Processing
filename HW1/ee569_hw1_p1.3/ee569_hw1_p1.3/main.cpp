@@ -34,9 +34,7 @@ int main(int argc, const char * argv[])
         cout << "program_name input_image.raw output_image.raw" << endl;
         return 0;
     }
-    cout << "original width: " << width <<endl;
-    cout << "original height: " << height <<endl;
-    
+
     // Read the image contents by fread(ptr,width,count,fp)
     unsigned char Imagedata[height][width][1];
     if (!(file=fopen(argv[1],"rb"))) {
@@ -53,24 +51,24 @@ int main(int argc, const char * argv[])
     // extend the edge of original image with imaginary 2-pixels boundaries, which is needed in further interpolation operations
     unsigned char ImageAddFrame[height+4][width+4][1];
     
-    for (int i=0; i<height; i++) {
-        for (int j=0; j<width; j++) {
-            ImageAddFrame[i+2][j+2][0] = Imagedata[i][j][0];
+    for (int y=0; y<height; y++) {
+        for (int x=0; x<width; x++) {
+            ImageAddFrame[y+2][x+2][0] = Imagedata[y][x][0];
         }
     }
     // copy upper and lower boundaries
-    for (int j=0; j<width; j++) {
-        ImageAddFrame[0][j+2][0] =  Imagedata[1][j][0];
-        ImageAddFrame[1][j+2][0] =  Imagedata[0][j][0];
-        ImageAddFrame[height+2][j+2][0] = Imagedata[height-1][j][0];
-        ImageAddFrame[height+3][j+2][0] = Imagedata[height-2][j][0];
+    for (int x=0; x<width; x++) {
+        ImageAddFrame[0][x+2][0] =  Imagedata[1][x][0];
+        ImageAddFrame[1][x+2][0] =  Imagedata[0][x][0];
+        ImageAddFrame[height+2][x+2][0] = Imagedata[height-1][x][0];
+        ImageAddFrame[height+3][x+2][0] = Imagedata[height-2][x][0];
     }
     // copy left and right boundaries from itself
-    for (int i=0; i<(height+4); i++) {
-        ImageAddFrame[i][0][0] = ImageAddFrame[i][3][0];
-        ImageAddFrame[i][1][0] = ImageAddFrame[i][2][0];
-        ImageAddFrame[i][width+2][0] = ImageAddFrame[i][width+1][0];
-        ImageAddFrame[i][width+3][0] = ImageAddFrame[i][width][0];
+    for (int y=0; y<(height+4); y++) {
+        ImageAddFrame[y][0][0] = ImageAddFrame[y][3][0];
+        ImageAddFrame[y][1][0] = ImageAddFrame[y][2][0];
+        ImageAddFrame[y][width+2][0] = ImageAddFrame[y][width+1][0];
+        ImageAddFrame[y][width+3][0] = ImageAddFrame[y][width][0];
     }
     
     // MHC Demosaicing - Construct color value of each pixel according to Bayer pattern
@@ -173,14 +171,13 @@ int main(int argc, const char * argv[])
         }
     }
     // Save the output_array into output image by fwrite(), the parameters are similar to fread()
-    FILE *new_file;
-    if (!(new_file=fopen(argv[2],"wb"))) {
+    if (!(file=fopen(argv[2],"wb"))) {
         cout << "Error: unable to save file" << endl;
         exit(1);
     }
     
-    fwrite(Image2ndOrder, sizeof(unsigned char), (height)*(width)*BytesPerPixel, new_file);
-    fclose(new_file);
+    fwrite(Image2ndOrder, sizeof(unsigned char), (height)*(width)*BytesPerPixel, file);
+    fclose(file);
     cout << "MHC demosaic image is successfully saved" <<endl;
     
     //Clear the memory
