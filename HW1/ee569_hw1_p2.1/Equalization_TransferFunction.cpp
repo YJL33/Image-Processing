@@ -2,22 +2,25 @@
 //  main.cpp
 //  ee569_hw1_p2.1
 //
-//  Method A
-//  Using the transfer-function-based histogram equalization method to enhance the contrast of the 512x512 24bit RGB Jet image
+//  Equalization Method A
+//  Using the transfer-function-based histogram equalization method to enhance the contrast of the squared image
+//  (Defaulted: 512x512 24bit RGB Jet image)
+//
+//  Input:
+//  Raw image, path of contrast enhanced image path, path of transfer function of image(txt), (imput image size)
 //
 //  Output:
-//  No. of pixels in each RGB values (txt), argv[3]
-//  Transfer Function (txt), argv[4]
-//  Enhanced Image (raw), argv[2]
+//  enhanced raw image, argv[2]; Transfer Function (txt), argv[3]
 //
 //  Created by Yun-Jun Lee on 9/3/15.
 //  Copyright (c) 2015 USC. All rights reserved.
-//
 
 #include <iostream>
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
+#ifndef EQUALIZE_TF
+#define EQUALIZE_TF
 
 using namespace std;
 
@@ -33,32 +36,31 @@ int main(int argc, const char * argv[])
     
     // argv[1] = "/Users/YJLee/Desktop/jet.raw"
     // argv[2] = "/Users/YJLee/Desktop/jet_A.raw"
-    // argv[3] = "/Users/YJLee/Desktop/jet_hist_A.txt"
-    // argv[4] = "/Users/YJLee/Desktop/jet_TF_A.txt"
+    // argv[3] = "/Users/YJLee/Desktop/jet_TF_A.txt"
     
     // Check for proper syntax
     cout << "Argument count: " << argc << endl;
-    if (argc < 5){
+    if (argc < 4){
         cout << "Syntax Error - Incorrect Parameter Usage:" << endl;
-        cout << "program_name input_image.raw output_image.raw input_hist.txt output_hist.txt" << endl;
+        cout << "program_name input_image.raw output_image.raw output_TFd.txt" << endl;
         return 0;
     }
-    
+    // Check if size is specified
+    if (argc >= 5){
+        Size = atoi(argv[4]);
+    }
     // Read the image contents by fread(ptr,Size,count,fp)
     unsigned char Imagedata[Size][Size][BytesPerPixel];
     if (!(file=fopen(argv[1],"rb"))) {
         cout << "Error: unable to open file" <<endl;
         exit(1);
     }
-    else {
-        cout << "Image successfully loaded" <<endl;
-    }
     fread(Imagedata, sizeof(unsigned char), Size*Size*BytesPerPixel, file);
     fclose(file);
     
     // The whole process can separate into 3 steps as follows:
     
-    // 1st Step: Read count all RGB values from 0~255 of each pixels, then output the result to plot histogram.
+    // 1st Step: Read count all RGB values from 0~255 of each pixels.
     // e.g. R=0, count=15 pixels, ... G=24, count=52 pixels,...etc.
     
     for (int y = 0; y < Size; y ++) {
@@ -68,16 +70,6 @@ int main(int argc, const char * argv[])
             }
         }
     }
-    if (!(file = fopen(argv[3], "w"))) {
-        cout << "Error: unable to save txt file" << endl;
-        }
-    fprintf(file, "RGB,ColorSpan,Count\n");
-    for (int channel = 0; channel < BytesPerPixel; channel++){
-        for(int colorvalue = 0; colorvalue <= ColorSpan; colorvalue++){
-            fprintf(file, "%d,%d,%d\n", channel, colorvalue, PixelCountOfColorLevel[channel][colorvalue]);
-        }
-    }
-    fclose(file);
     
     // 2nd Step: Calculate the Transfer Function from the cumulative probability,
     // which can be derived from probability distribution(Pixel counts of each color level/Total pixel number).
@@ -90,7 +82,7 @@ int main(int argc, const char * argv[])
             TransferFunction[channel][colorvalue] = floor(CumulativeProb*ColorSpan);
         }
     }
-    if (!(file = fopen(argv[4], "w"))) {
+    if (!(file = fopen(argv[3], "w"))) {
         cout << "Error: unable to save txt file" << endl;
     }
     fprintf(file, "Old RGB,ColorSpan,New RGB\n");
@@ -119,12 +111,7 @@ int main(int argc, const char * argv[])
     }
     
     fwrite(ImageOutput, sizeof(unsigned char), (Size)*(Size)*BytesPerPixel, file);
-    fclose(file);
-    cout << "Contrast adjusted image successfully saved" <<endl;
-    
-    //Clear the memory
-    memset(ImageOutput, 0, sizeof(ImageOutput));
-    memset(Imagedata, 0, sizeof(Imagedata));
-    
+    fclose(file);    
     return 0;
 }
+#endif

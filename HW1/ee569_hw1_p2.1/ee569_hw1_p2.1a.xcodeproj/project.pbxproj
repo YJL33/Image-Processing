@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		57BBFD921BA2358500667656 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 57BBFD911BA2358500667656 /* main.cpp */; };
+		57BBFD921BA2358500667656 /* Equalization_TransferFunction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 57BBFD911BA2358500667656 /* Equalization_TransferFunction.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -24,7 +24,7 @@
 
 /* Begin PBXFileReference section */
 		57BBFD8E1BA2358500667656 /* ee569_hw1_p2.1a */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ee569_hw1_p2.1a; sourceTree = BUILT_PRODUCTS_DIR; };
-		57BBFD911BA2358500667656 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		57BBFD911BA2358500667656 /* Equalization_TransferFunction.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Equalization_TransferFunction.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,7 +41,7 @@
 		57BBFD851BA2358500667656 = {
 			isa = PBXGroup;
 			children = (
-				57BBFD901BA2358500667656 /* ee569_hw1_p2.1a */,
+				57BBFD911BA2358500667656 /* Equalization_TransferFunction.cpp */,
 				57BBFD8F1BA2358500667656 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -52,15 +52,6 @@
 				57BBFD8E1BA2358500667656 /* ee569_hw1_p2.1a */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		57BBFD901BA2358500667656 /* ee569_hw1_p2.1a */ = {
-			isa = PBXGroup;
-			children = (
-				57BBFD911BA2358500667656 /* main.cpp */,
-			);
-			name = ee569_hw1_p2.1a;
-			path = ee569_hw1_p2.1;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -119,7 +110,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				57BBFD921BA2358500667656 /* main.cpp in Sources */,
+				57BBFD921BA2358500667656 /* Equalization_TransferFunction.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

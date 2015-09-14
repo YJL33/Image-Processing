@@ -3,13 +3,14 @@
 //  ee569_hw1_p2.1
 //
 //  Method B
-//  Using the "Bucket Filling" method to enhance the contrast of the 512x512 24bit RGB Jet image
-//  In this qustion, each bucket has exactly (512X512)/256 = 1024
+//  Using the "Bucket Filling" method to enhance the contrast of squared image.
+//  (Defaulted is of the 512x512 24bit RGB Jet image, each bucket has exactly (512X512)/256 = 1024 pixels.)
+//
+//  Input:
+//  Raw image, path of contrast enhanced image path, path of histogram of image before(txt), path of histogram of image after(txt), (Size of imput image)
 //
 //  Output:
-//  No. of pixels in each RGB values (txt), argv[3]
-//  Cumulative Distribution Function (txt), argv[4]
-//  Enhanced Image (raw), argv[2]
+//  enhanced raw image, argv[2]; No. of pixels in each RGB values (txt), argv[3]; No. of pixels in each RGB values (txt), argv[4]
 //
 //  Created by Yun-Jun Lee on 9/3/15.
 //  Copyright (c) 2015 USC. All rights reserved.
@@ -19,6 +20,8 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
+#ifndef EQUALIZE_BF
+#define EQUALIZE_BF
 
 using namespace std;
 
@@ -27,8 +30,7 @@ int main(int argc, const char * argv[])
     // Define the variables
     FILE *file;
     int ColorSpan = 256;      // The color value span we want to expand (e.g. from 10~50 => 0~255)
-    int Size = 512;
-    int BytesPerPixel = 3;
+    int Size = 512, BytesPerPixel = 3;
     int BucketSize;
     int MinLevel[3] = {0};    // The minimum color value in each channel
     int MaxLevel[3] = {0};    // The maximum color value in each channel
@@ -49,18 +51,18 @@ int main(int argc, const char * argv[])
         cout << "program_name input_image.raw output_image.raw input_hist.txt output_hist.txt" << endl;
         return 0;
     }
-    
+    // Check if size is specified
+    if (argc >= 6){
+        Size = atoi(argv[5]);
+    }
     // Read the image contents by fread(ptr,Size,count,fp)
     if (!(file=fopen(argv[1],"rb"))) {
         cout << "Error: unable to open file" <<endl;
         exit(1);
     }
-    else {
-        cout << "Image successfully loaded" <<endl;
-    }
     fread(Imagedata, sizeof(unsigned char), Size*Size*BytesPerPixel, file);
     fclose(file);
-    
+    //////////////////////////////////////////////////////////////////////////////////////////////////////
     // The whole process can separate into 3 steps as follows:
     
     // 1st Step: Read count all RGB values from 0~255 of each pixels, then output the result to plot histogram.
@@ -86,10 +88,6 @@ int main(int argc, const char * argv[])
             }
         }
     }
-    printf("MinR: %d, MaxR: %d\n", MinLevel[0], MaxLevel[0]);
-    printf("MinG: %d, MaxG: %d\n", MinLevel[1], MaxLevel[1]);
-    printf("MinB: %d, MaxB: %d\n", MinLevel[2], MaxLevel[2]);
-    
     if (!(file = fopen(argv[3], "w"))) {
         cout << "Error: unable to save txt file" << endl;
     }
@@ -143,7 +141,7 @@ int main(int argc, const char * argv[])
         }
     }
     fclose(file);
-    
+    //////////////////////////////////////////////////////////////////////////////////////////////////////
     // Save the output_array into output image by fwrite(), the parameters are similar to fread()
     if (!(file=fopen(argv[2],"wb"))) {
         cout << "Error: unable to save img file" << endl;
@@ -152,11 +150,6 @@ int main(int argc, const char * argv[])
     
     fwrite(ImageOutput, sizeof(unsigned char), (Size)*(Size)*BytesPerPixel, file);
     fclose(file);
-    cout << "Contrast adjusted image successfully saved" <<endl;
-    
-    //Clear the memory
-    memset(ImageOutput, 0, sizeof(ImageOutput));
-    memset(Imagedata, 0, sizeof(Imagedata));
-    
     return 0;
 }
+#endif

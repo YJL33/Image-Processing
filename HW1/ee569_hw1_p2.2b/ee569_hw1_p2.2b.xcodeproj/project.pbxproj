@@ -7,11 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		570C3CEE1B9F9A1700A1BDA6 /* Demosaic_MHC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 570C3CED1B9F9A1700A1BDA6 /* Demosaic_MHC.cpp */; };
+		573477431BA634330013A262 /* OilPaint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 573477421BA634330013A262 /* OilPaint.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		570C3CE81B9F9A1700A1BDA6 /* CopyFiles */ = {
+		573CB6621BA62F6A0058727D /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = /usr/share/man/man1/;
@@ -23,12 +23,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		570C3CEA1B9F9A1700A1BDA6 /* ee569_hw1_p1.3 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ee569_hw1_p1.3; sourceTree = BUILT_PRODUCTS_DIR; };
-		570C3CED1B9F9A1700A1BDA6 /* Demosaic_MHC.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Demosaic_MHC.cpp; sourceTree = "<group>"; };
+		573477421BA634330013A262 /* OilPaint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OilPaint.cpp; sourceTree = "<group>"; };
+		573CB6641BA62F6A0058727D /* ee569_hw1_p2.2b */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ee569_hw1_p2.2b; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		570C3CE71B9F9A1700A1BDA6 /* Frameworks */ = {
+		573CB6611BA62F6A0058727D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -38,18 +38,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		570C3CE11B9F9A1700A1BDA6 = {
+		573CB65B1BA62F6A0058727D = {
 			isa = PBXGroup;
 			children = (
-				570C3CED1B9F9A1700A1BDA6 /* Demosaic_MHC.cpp */,
-				570C3CEB1B9F9A1700A1BDA6 /* Products */,
+				573477421BA634330013A262 /* OilPaint.cpp */,
+				573CB6651BA62F6A0058727D /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		570C3CEB1B9F9A1700A1BDA6 /* Products */ = {
+		573CB6651BA62F6A0058727D /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				570C3CEA1B9F9A1700A1BDA6 /* ee569_hw1_p1.3 */,
+				573CB6641BA62F6A0058727D /* ee569_hw1_p2.2b */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -57,67 +57,67 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		570C3CE91B9F9A1700A1BDA6 /* ee569_hw1_p1.3 */ = {
+		573CB6631BA62F6A0058727D /* ee569_hw1_p2.2b */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 570C3CF11B9F9A1700A1BDA6 /* Build configuration list for PBXNativeTarget "ee569_hw1_p1.3" */;
+			buildConfigurationList = 573CB66B1BA62F6A0058727D /* Build configuration list for PBXNativeTarget "ee569_hw1_p2.2b" */;
 			buildPhases = (
-				570C3CE61B9F9A1700A1BDA6 /* Sources */,
-				570C3CE71B9F9A1700A1BDA6 /* Frameworks */,
-				570C3CE81B9F9A1700A1BDA6 /* CopyFiles */,
+				573CB6601BA62F6A0058727D /* Sources */,
+				573CB6611BA62F6A0058727D /* Frameworks */,
+				573CB6621BA62F6A0058727D /* CopyFiles */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = ee569_hw1_p1.3;
-			productName = ee569_hw1_p1.3;
-			productReference = 570C3CEA1B9F9A1700A1BDA6 /* ee569_hw1_p1.3 */;
+			name = ee569_hw1_p2.2b;
+			productName = ee569_hw1_p2.2b;
+			productReference = 573CB6641BA62F6A0058727D /* ee569_hw1_p2.2b */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		570C3CE21B9F9A1700A1BDA6 /* Project object */ = {
+		573CB65C1BA62F6A0058727D /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0620;
 				ORGANIZATIONNAME = USC;
 				TargetAttributes = {
-					570C3CE91B9F9A1700A1BDA6 = {
+					573CB6631BA62F6A0058727D = {
 						CreatedOnToolsVersion = 6.2;
 					};
 				};
 			};
-			buildConfigurationList = 570C3CE51B9F9A1700A1BDA6 /* Build configuration list for PBXProject "ee569_hw1_p1.3" */;
+			buildConfigurationList = 573CB65F1BA62F6A0058727D /* Build configuration list for PBXProject "ee569_hw1_p2.2b" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 			);
-			mainGroup = 570C3CE11B9F9A1700A1BDA6;
-			productRefGroup = 570C3CEB1B9F9A1700A1BDA6 /* Products */;
+			mainGroup = 573CB65B1BA62F6A0058727D;
+			productRefGroup = 573CB6651BA62F6A0058727D /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				570C3CE91B9F9A1700A1BDA6 /* ee569_hw1_p1.3 */,
+				573CB6631BA62F6A0058727D /* ee569_hw1_p2.2b */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		570C3CE61B9F9A1700A1BDA6 /* Sources */ = {
+		573CB6601BA62F6A0058727D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				570C3CEE1B9F9A1700A1BDA6 /* Demosaic_MHC.cpp in Sources */,
+				573477431BA634330013A262 /* OilPaint.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		570C3CEF1B9F9A1700A1BDA6 /* Debug */ = {
+		573CB6691BA62F6A0058727D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -157,7 +157,7 @@
 			};
 			name = Debug;
 		};
-		570C3CF01B9F9A1700A1BDA6 /* Release */ = {
+		573CB66A1BA62F6A0058727D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -191,14 +191,14 @@
 			};
 			name = Release;
 		};
-		570C3CF21B9F9A1700A1BDA6 /* Debug */ = {
+		573CB66C1BA62F6A0058727D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
 		};
-		570C3CF31B9F9A1700A1BDA6 /* Release */ = {
+		573CB66D1BA62F6A0058727D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -208,25 +208,25 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		570C3CE51B9F9A1700A1BDA6 /* Build configuration list for PBXProject "ee569_hw1_p1.3" */ = {
+		573CB65F1BA62F6A0058727D /* Build configuration list for PBXProject "ee569_hw1_p2.2b" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				570C3CEF1B9F9A1700A1BDA6 /* Debug */,
-				570C3CF01B9F9A1700A1BDA6 /* Release */,
+				573CB6691BA62F6A0058727D /* Debug */,
+				573CB66A1BA62F6A0058727D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		570C3CF11B9F9A1700A1BDA6 /* Build configuration list for PBXNativeTarget "ee569_hw1_p1.3" */ = {
+		573CB66B1BA62F6A0058727D /* Build configuration list for PBXNativeTarget "ee569_hw1_p2.2b" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				570C3CF21B9F9A1700A1BDA6 /* Debug */,
-				570C3CF31B9F9A1700A1BDA6 /* Release */,
+				573CB66C1BA62F6A0058727D /* Debug */,
+				573CB66D1BA62F6A0058727D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 570C3CE21B9F9A1700A1BDA6 /* Project object */;
+	rootObject = 573CB65C1BA62F6A0058727D /* Project object */;
 }

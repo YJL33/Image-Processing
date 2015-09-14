@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "57BBFD8D1BA2358500667656"
-               BuildableName = "ee569_hw1_p2.1a"
-               BlueprintName = "ee569_hw1_p2.1a"
-               ReferencedContainer = "container:ee569_hw1_p2.1a.xcodeproj">
+               BlueprintIdentifier = "573CB6631BA62F6A0058727D"
+               BuildableName = "ee569_hw1_p2.2b"
+               BlueprintName = "ee569_hw1_p2.2b"
+               ReferencedContainer = "container:ee569_hw1_p2.2b.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -32,10 +32,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "57BBFD8D1BA2358500667656"
-            BuildableName = "ee569_hw1_p2.1a"
-            BlueprintName = "ee569_hw1_p2.1a"
-            ReferencedContainer = "container:ee569_hw1_p2.1a.xcodeproj">
+            BlueprintIdentifier = "573CB6631BA62F6A0058727D"
+            BuildableName = "ee569_hw1_p2.2b"
+            BlueprintName = "ee569_hw1_p2.2b"
+            ReferencedContainer = "container:ee569_hw1_p2.2b.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -52,23 +52,19 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "57BBFD8D1BA2358500667656"
-            BuildableName = "ee569_hw1_p2.1a"
-            BlueprintName = "ee569_hw1_p2.1a"
-            ReferencedContainer = "container:ee569_hw1_p2.1a.xcodeproj">
+            BlueprintIdentifier = "573CB6631BA62F6A0058727D"
+            BuildableName = "ee569_hw1_p2.2b"
+            BlueprintName = "ee569_hw1_p2.2b"
+            ReferencedContainer = "container:ee569_hw1_p2.2b.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "&quot;/Users/YJLee/Desktop/jet.raw&quot;"
+            argument = "&quot;/Users/YJLee/Desktop/barn64.raw&quot;"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "&quot;/Users/YJLee/Desktop/jet_A.raw&quot;"
-            isEnabled = "YES">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "&quot;/Users/YJLee/Desktop/jet_TF_A.txt&quot;"
+            argument = "&quot;/Users/YJLee/Desktop/barn_oil.raw&quot;"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>
@@ -85,10 +81,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "57BBFD8D1BA2358500667656"
-            BuildableName = "ee569_hw1_p2.1a"
-            BlueprintName = "ee569_hw1_p2.1a"
-            ReferencedContainer = "container:ee569_hw1_p2.1a.xcodeproj">
+            BlueprintIdentifier = "573CB6631BA62F6A0058727D"
+            BuildableName = "ee569_hw1_p2.2b"
+            BlueprintName = "ee569_hw1_p2.2b"
+            ReferencedContainer = "container:ee569_hw1_p2.2b.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

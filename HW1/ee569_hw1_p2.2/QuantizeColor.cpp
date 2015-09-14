@@ -3,7 +3,16 @@
 //  ee569_hw1_p2.2
 //
 //  Image Filtering - Creating Oil Painting Effect
-//  Step 1. Quantizing original image
+//  Step 1. Quantizing original 24-bit RGB raw image (barn.raw is defaulted)
+//
+//  Based on color level, separate each channel into four parts in equal number.
+//  Then assign new RGB values for each of them, based on average RGB value of each part.
+//
+//  Input:
+//  Raw image; path of desired quantized image; (height of image); (width of image);
+//
+//  Output:
+//  enhanced raw image, argv[2];
 //
 //  Created by Yun-Jun Lee on 9/7/15.
 //  Copyright (c) 2015 USC. All rights reserved.
@@ -12,6 +21,8 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
+#ifndef QUANTIZE_RAWIMG
+#define QUANTIZE_RAWIMG
 
 using namespace std;
 
@@ -47,9 +58,6 @@ int main(int argc, const char * argv[])
     if (!(file=fopen(argv[1],"rb"))) {
         cout << "Error: unable to open file" <<endl;
         exit(1);
-    }
-    else {
-        cout << "Image successfully loaded" <<endl;
     }
     fread(Imagedata, sizeof(unsigned char), height*width*BytesPerPixel, file);
     fclose(file);
@@ -111,6 +119,10 @@ int main(int argc, const char * argv[])
             NewRGBLv[ch][qt] = (unsigned char)round((double)sum[ch][qt]/(double)bin[ch][qt]);
         }
     }
+    printf("R: %d, %d, %d, %d\n", (NewRGBLv[0][0]),(NewRGBLv[0][1]),(NewRGBLv[0][2]),(NewRGBLv[0][3]));
+    printf("G: %d, %d, %d, %d\n", (NewRGBLv[1][0]),(NewRGBLv[1][1]),(NewRGBLv[1][2]),(NewRGBLv[1][3]));
+    printf("B: %d, %d, %d, %d\n", (NewRGBLv[2][0]),(NewRGBLv[2][1]),(NewRGBLv[2][2]),(NewRGBLv[2][3]));
+    
     // d. Assign new RGB values (only 4 different levels) to each pixel.
     for (int ch=0; ch<BytesPerPixel; ch++) {
         for (int y=0; y<height; y++) {
@@ -140,6 +152,6 @@ int main(int argc, const char * argv[])
     }
     fwrite(ImageQuantize, sizeof(unsigned char), (height)*(width)*BytesPerPixel, file);
     fclose(file);
-    cout << "Quantized image successfully saved" <<endl;
     return 0;
 }
+#endif

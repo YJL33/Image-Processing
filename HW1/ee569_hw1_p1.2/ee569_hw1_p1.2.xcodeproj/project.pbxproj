@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		57AAE2CE1B9A2D0100358395 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 57AAE2CD1B9A2D0100358395 /* main.cpp */; };
+		57AAE2CE1B9A2D0100358395 /* Demosaic_BL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 57AAE2CD1B9A2D0100358395 /* Demosaic_BL.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -24,7 +24,7 @@
 
 /* Begin PBXFileReference section */
 		57AAE2CA1B9A2D0100358395 /* ee569_hw1_p1.2 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ee569_hw1_p1.2; sourceTree = BUILT_PRODUCTS_DIR; };
-		57AAE2CD1B9A2D0100358395 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		57AAE2CD1B9A2D0100358395 /* Demosaic_BL.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Demosaic_BL.cpp; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,7 +41,7 @@
 		57AAE2C11B9A2D0100358395 = {
 			isa = PBXGroup;
 			children = (
-				57AAE2CC1B9A2D0100358395 /* ee569_hw1_p1.2 */,
+				57AAE2CD1B9A2D0100358395 /* Demosaic_BL.cpp */,
 				57AAE2CB1B9A2D0100358395 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -52,14 +52,6 @@
 				57AAE2CA1B9A2D0100358395 /* ee569_hw1_p1.2 */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		57AAE2CC1B9A2D0100358395 /* ee569_hw1_p1.2 */ = {
-			isa = PBXGroup;
-			children = (
-				57AAE2CD1B9A2D0100358395 /* main.cpp */,
-			);
-			path = ee569_hw1_p1.2;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -118,7 +110,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				57AAE2CE1B9A2D0100358395 /* main.cpp in Sources */,
+				57AAE2CE1B9A2D0100358395 /* Demosaic_BL.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -232,6 +224,7 @@
 				57AAE2D31B9A2D0100358395 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

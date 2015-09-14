@@ -3,16 +3,20 @@
 //  HW1_P1.3
 //
 //  MHC Demosaicing
-//  Implement MHC demosaicing and apply it to the 424x636 Parrot image
+//  Implement MHC demosaicing (424x636 Parrot image is defaulted)
+//
+//  Input: Raw image, desired output file path, (Number of color channel), (input height), (output width)
+//  Output: MHC demosaic image
 //
 //  Created by Yun-Jun Lee on 8/31/15.
 //  Copyright (c) 2015 USC. All rights reserved.
-//
 
 #include <iostream>
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
+#ifndef DEMOSAIC_RAWIMG_MHC
+#define DEMOSAIC_RAWIMG_MHC
 
 using namespace std;
 
@@ -33,6 +37,11 @@ int main(int argc, const char * argv[])
         cout << "Syntax Error - Incorrect Parameter Usage:" << endl;
         cout << "program_name input_image.raw output_image.raw" << endl;
         return 0;
+    }
+    // Check if size is specified
+    if (argc >= 5){
+        height = atoi(argv[4]);
+        width = atoi(argv[5]);
     }
 
     // Read the image contents by fread(ptr,width,count,fp)
@@ -187,3 +196,4 @@ int main(int argc, const char * argv[])
 
     return 0;
 }
+#endif

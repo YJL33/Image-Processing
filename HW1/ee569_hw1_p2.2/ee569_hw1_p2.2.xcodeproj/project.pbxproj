@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		574A95BB1BA4DFBF001D0C8D /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 574A95BA1BA4DFBF001D0C8D /* main.cpp */; };
+		574A95BB1BA4DFBF001D0C8D /* QuantizeColor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 574A95BA1BA4DFBF001D0C8D /* QuantizeColor.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -24,7 +24,7 @@
 
 /* Begin PBXFileReference section */
 		574A95B71BA4DFBF001D0C8D /* ee569_hw1_p2.2 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ee569_hw1_p2.2; sourceTree = BUILT_PRODUCTS_DIR; };
-		574A95BA1BA4DFBF001D0C8D /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		574A95BA1BA4DFBF001D0C8D /* QuantizeColor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = QuantizeColor.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,7 +41,7 @@
 		574A95AE1BA4DFBF001D0C8D = {
 			isa = PBXGroup;
 			children = (
-				574A95B91BA4DFBF001D0C8D /* ee569_hw1_p2.2 */,
+				574A95BA1BA4DFBF001D0C8D /* QuantizeColor.cpp */,
 				574A95B81BA4DFBF001D0C8D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -52,14 +52,6 @@
 				574A95B71BA4DFBF001D0C8D /* ee569_hw1_p2.2 */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		574A95B91BA4DFBF001D0C8D /* ee569_hw1_p2.2 */ = {
-			isa = PBXGroup;
-			children = (
-				574A95BA1BA4DFBF001D0C8D /* main.cpp */,
-			);
-			path = ee569_hw1_p2.2;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -118,7 +110,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				574A95BB1BA4DFBF001D0C8D /* main.cpp in Sources */,
+				574A95BB1BA4DFBF001D0C8D /* QuantizeColor.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -232,6 +224,7 @@
 				574A95C01BA4DFBF001D0C8D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
