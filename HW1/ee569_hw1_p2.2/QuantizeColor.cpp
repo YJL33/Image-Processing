@@ -30,7 +30,7 @@ int main(int argc, const char * argv[])
 {
     // Define the variables
     FILE *file;
-    int ColorSpan = 256, BytesPerPixel = 3, height = 380, width = 275;    // Default height/width value (barn.raw)
+    int ColorSpan = 256, BytesPerPixel = 3, height = 275, width = 380;    // Default height/width value (barn.raw)
     int NumberOfPixels = height*width;
     int PixelCount[3][256] = {0};                         // number of pixels of certain Color Level
     int Quartile[3][4] = {0};                             // quartile[channel][first, median, third]
@@ -43,15 +43,18 @@ int main(int argc, const char * argv[])
     // argv[4] = 275                                      // argv[4] = 247
 
     // Check for proper syntax
-    if (argc < 5){
+    if (argc < 3){
         cout << "Syntax Error - Incorrect Parameter Usage:" << endl;
-        cout << "program_name input_image.raw output_image64.raw input_image's_height input_image's_width" << endl;
+        cout << "program_name input_image.raw output_image64.raw (input_image's_height) (input_image's_width)" << endl;
         return 0;
+    }
+    else{
+        cout << "using default height/width" << endl;
     }
     // Get specific size of input image
     if (argc >= 5){
-        height = (int)atoi(argv[3]);
-        width = (int)atoi(argv[4]);
+         width= (int)atoi(argv[3]);
+         height= (int)atoi(argv[4]);
     }
     // Read the image contents by fread(ptr,Size,count,fp)
     unsigned char Imagedata[height][width][BytesPerPixel];
