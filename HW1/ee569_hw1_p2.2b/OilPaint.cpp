@@ -5,11 +5,11 @@
 //  Image Filtering - Creating Oil Painting Effect
 //  Step 2. Impose oil painting effect on quantized 24-bit RGB raw image (barn64.raw is defaulted)
 //
-//  The idea is to build an N*N "window" which contains NxN surrounding pixels for each point,
+//  The idea is to build an customized N*N "window" which contains NxN surrounding pixels for each point,
 //  and then assign the most frequent RGB combination for the central point.
 //
 //  Input:
-//  Raw quantized image; path of desired output image; (height of image); (width of image);
+//  Raw quantized image; path of desired output image; (window size); (height of image); (width of image);
 //
 //  Output:
 //  oil-painted effected raw-format image, argv[2];
@@ -26,55 +26,79 @@
 
 using namespace std;
 
-unsigned char MostFrequentColor(unsigned char RGBarray[] ,int row_number, int OutputChannel){
-    int ColorCount[row_number];
-    for (int i=0; i<row_number; i++) {                      // Count each combination's appearance
-        ColorCount[i]=0;
-        for (int j=0; j<row_number; j++) {
+// this function outputs the corresponding component of most frequent "color" (RGB combination), based on Window size, effective pixels, and desired channel.
+
+unsigned char getComponentOfMostFrequentRGB(unsigned char RGBarray[] ,int pixels_number, int OutputChannel){
+        
+    int color_index[pixels_number];                         // Index each pixel's RGB combination
+    int color_count[pixels_number];                         // Count each RGB combination's appearance
+        
+    for (int i=0; i<pixels_number; i++) {
+        color_index[i] = i;
+        color_count[i] = 1;
+    }
+    for (int i=0; i<pixels_number; i++) {                   // Change repeated combination's index into same one
+        if (i == color_index[i]) {
+        for (int j=i+1; j<pixels_number; j++) {
             if (RGBarray[i*3] == RGBarray[j*3] && RGBarray[i*3+1] == RGBarray[j*3+1] && RGBarray[i*3+2] == RGBarray[j*3+2]) {
-                ColorCount[i]++;
+                color_index[j] = color_index[i];
+                color_count[i]++;
             }
         }
-    }
-    int MaxAppearance=0;
-    int MostFrequent=0;
-    for (int i=0; i<row_number; i++) {                      // Find out the most frequent combination
-        if (ColorCount[i]>MaxAppearance) {
-            MaxAppearance=ColorCount[i];
-            MostFrequent=i;
         }
     }
-    //cout << round(RGBarray[MostFrequent]) << "," << round(RGBarray[MostFrequent+1]) << "," << round(RGBarray[MostFrequent+2]) << "," << endl;
-    return (unsigned char)RGBarray[MostFrequent*3+OutputChannel];
+    //int color_count[pixels_number];
+    //for (int i=0; i<pixels_number; i++) {                      // Count each combination's appearance
+    //    color_count[i]=0;
+    //    for (int j=0; j<pixels_number; j++) {
+    //        if (RGBarray[i*3] == RGBarray[j*3] && RGBarray[i*3+1] == RGBarray[j*3+1] && RGBarray[i*3+2] == RGBarray[j*3+2]) {
+    //            color_count[i]++;}}}
+        
+    int max_appearance = 0 , most_frequent_combo = 0;
+    for (int i=0; i<pixels_number; i++) {                      // Find out the most frequent combination
+        if (color_count[i]>max_appearance) {
+            max_appearance=color_count[i];
+            most_frequent_combo=i;
+        }
+    }
+    // cout << round(RGBarray[most_frequent_combo*3]) << "," << round(RGBarray[most_frequent_combo*3+1]) << "," << round(RGBarray[most_frequent_combo*3+2]) << "," << endl;
+    return (unsigned char)RGBarray[most_frequent_combo*3+OutputChannel];
 }
 
 int main(int argc, const char * argv[])
 {
-    // Define the variables
+    clock_t begin = clock();
     FILE *file;
     int BytesPerPixel = 3, height = 275, width = 380;    // Default height/width value (barn.raw)
-    int WindowSize = 11;                            // Default window size
-    int h = floor(WindowSize/2);                                   // Half of window size
+    int WindowSize;                                      // Default window size
     
     // argv[1] = "/Users/YJLee/Desktop/barn64.raw"          // argv[1] = "/Users/YJLee/Desktop/coliseum64.raw"
     // argv[2] = "/Users/YJLee/Desktop/barn_oil.raw"        // argv[2] = "/Users/YJLee/Desktop/coliseum_oil.raw"
-    
-    // argv[3] = 380                                        // argv[3] = 580
-    // argv[4] = 275                                        // argv[4] = 247
+    // argv[3] = N                                          // argv[3] = N
+    // argv[4] = 380                                        // argv[4] = 580
+    // argv[5] = 275                                        // argv[5] = 247
     
     // Check for proper syntax
     if (argc < 3){
         cout << "Syntax Error - Incorrect Parameter Usage:" << endl;
-        cout << "program_name input_image.raw output_image64.raw (input_image's_width) (input_image's_height)" << endl;
+        cout << "program_name  input_image.raw  output_image64.raw  (window_size)  (input_image's_width)  (input_image's_height)" << endl;
         return 0;
     }
-    // Get specific size of input image
-    if (argc >= 5){
-         width= (int)atoi(argv[3]);
-         height= (int)atoi(argv[4]);
+    // Get specific size of windows and input image
+    if (argc < 4){
+        WindowSize=3;
     }
+    else {
+        WindowSize = (int)atoi(argv[3]);
+    }
+    if (argc == 6){
+        width= (int)atoi(argv[4]);
+        height= (int)atoi(argv[5]);
+    }
+    printf("window size = %d x %d\n", WindowSize, WindowSize);
+    printf("image width = %d , image height = %d\n", width, height);
+
     // Read the image contents by fread(ptr,Size,count,fp)
-    
     unsigned char ImageQuantize[height][width][BytesPerPixel];
     
     if (!(file=fopen(argv[1],"rb"))) {
@@ -87,28 +111,28 @@ int main(int argc, const char * argv[])
     //////////////////////////////////////////////////////////////////////////////////
     // Assign each pixel new RGB value, according to the most frequent combination in the window.
     unsigned char ImageOutput[height][width][BytesPerPixel];
-    
+
     for (int y = 0; y < height; y++) {
         for(int x = 0; x < width; x++) {
 
-            int PixelCount=0;
-            unsigned char Window[PixelCount];                                                 // RGB combination of all pixels in the window
-            
-            for (int j= y-h; j<=y+h; j++) {                                         // Apply the window on each one single Pixel
-                for (int i= x-h; i<=x+h; i++) {
+            int pixel_count;
+            unsigned char window[pixel_count];                                          // Use 1-D array to save RGB values of all pixels inside the window
+            pixel_count=0;
+            for (int j= y-floor(WindowSize/2); j<=y+floor(WindowSize/2); j++) {         // Apply the window on each one single Pixel
+                for (int i= x-floor(WindowSize/2); i<=x+floor(WindowSize/2); i++) {
                     
-                    if (j >= 0 && j <= height-1 && i >= 0 && i <= width-1) {            // Make sure pixel in both window and image
+                    if (j >= 0 && j <= height-1 && i >= 0 && i <= width-1) {            // Make sure pixel not outside the image
                         for (int ch=0; ch<BytesPerPixel; ch++) {
-                        Window[PixelCount*BytesPerPixel+ch]= ImageQuantize[j][i][ch];             // Get all RGB combinations
+                        window[pixel_count*BytesPerPixel+ch]= ImageQuantize[j][i][ch];  // Save all RGB combinations from input (quantized) data
                         }
-                    PixelCount++;
-                        //cout << round(ImageQuantize[j][i][0]) << "," <<round(ImageQuantize[j][i][1]) << "," << round(ImageQuantize[j][i][2]) << endl;
+                    pixel_count++;
+                    //cout << round(ImageQuantize[j][i][0]) << "," << round(ImageQuantize[j][i][1]) << "," << round(ImageQuantize[j][i][2]) << endl;
                     }
                 }
             }
-            ImageOutput[y][x][0] = MostFrequentColor(Window, (PixelCount), 0);            // Apply the most frequent color to the output pixel.
-            ImageOutput[y][x][1] = MostFrequentColor(Window, (PixelCount), 1);
-            ImageOutput[y][x][2] = MostFrequentColor(Window, (PixelCount), 2);
+            for (int ch=0; ch<BytesPerPixel; ch++) {
+                ImageOutput[y][x][ch] = getComponentOfMostFrequentRGB(window, pixel_count, ch);     // Apply the most frequent "color" to the output pixel.
+            }
             }
         }
     /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -119,7 +143,9 @@ int main(int argc, const char * argv[])
     }
     fwrite(ImageOutput, sizeof(unsigned char), (height)*(width)*BytesPerPixel, file);
     fclose(file);
-    
+    clock_t end = clock();
+    double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
+    printf("elapsed time: %f sec\n",elapsed_secs);
     return 0;
 }
 #endif

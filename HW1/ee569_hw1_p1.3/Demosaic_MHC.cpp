@@ -22,12 +22,10 @@ using namespace std;
 
 int main(int argc, const char * argv[])
 {
-    // Define the variables
+    clock_t begin = clock();
     FILE *file;
-    int width = 424;
-    int height = 636;
-    int BytesPerPixel = 3;
-        
+    int width = 424, height = 636, BytesPerPixel = 3;                   // Define the variables
+    
     // argv[1] = "/Users/YJLee/Desktop/parrot_CFA.raw"
     // argv[2] = "/Users/YJLee/Desktop/parrot_MHC.raw"
     
@@ -49,9 +47,6 @@ int main(int argc, const char * argv[])
     if (!(file=fopen(argv[1],"rb"))) {
         cout << "Error: unable to open file" <<endl;
         exit(1);
-    }
-    else {
-        cout << "Image successfully is loaded" <<endl;
     }
     fread(Imagedata, sizeof(unsigned char), height*width*1, file);
     fclose(file);
@@ -189,10 +184,9 @@ int main(int argc, const char * argv[])
     fclose(file);
     cout << "MHC demosaic image is successfully saved" <<endl;
     
-    //Clear the memory
-    memset(Imagedata, 0, sizeof(Imagedata));
-    memset(ImageAddFrame, 0, sizeof(ImageAddFrame));
-    memset(Image2ndOrder, 0, sizeof(Image2ndOrder));
+    clock_t end = clock();
+    double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
+    printf("elapsed time: %f sec\n", elapsed_secs);
 
     return 0;
 }

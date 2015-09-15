@@ -27,15 +27,15 @@ using namespace std;
 
 int main(int argc, const char * argv[])
 {
-    // Define the variables
+    clock_t begin = clock();
     FILE *file;
-    int ColorSpan = 256;      // The color value span we want to expand (e.g. from 10~50 => 0~255)
-    int Size = 512, BytesPerPixel = 3;
+    int ColorSpan = 256;                                    // The color value span we want to expand (e.g. from 10~50 => 0~255)
+    int Size = 512, BytesPerPixel = 3;                      // Define the variables
     int BucketSize;
-    int MinLevel[3] = {0};    // The minimum color value in each channel
-    int MaxLevel[3] = {0};    // The maximum color value in each channel
-    int PixelCountOfColorLevelBefore[3][256] = {0};        // Count of pixels equal to same single value(0~255) in each channel
-    int PixelCountOfColorLevelAfter[3][256] = {0};        // Count of pixels after processing
+    int MinLevel[3] = {0};                                  // The minimum color value in each channel
+    int MaxLevel[3] = {0};                                  // The maximum color value in each channel
+    int PixelCountOfColorLevelBefore[3][256] = {0};         // Count of pixels equal to same single value(0~255) in each channel
+    int PixelCountOfColorLevelAfter[3][256] = {0};          // Count of pixels after processing
     unsigned char Imagedata[Size][Size][BytesPerPixel];
     unsigned char ImageOutput[Size][Size][BytesPerPixel];
     
@@ -150,6 +150,9 @@ int main(int argc, const char * argv[])
     
     fwrite(ImageOutput, sizeof(unsigned char), (Size)*(Size)*BytesPerPixel, file);
     fclose(file);
+    clock_t end = clock();
+    double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
+    printf("elapsed time: %f sec\n", elapsed_secs);
     return 0;
 }
 #endif

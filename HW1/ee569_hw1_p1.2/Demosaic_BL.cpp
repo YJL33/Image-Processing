@@ -22,10 +22,9 @@ using namespace std;
 
 int main(int argc, const char * argv[])
 {
-    // Define the variables
-    
+    clock_t begin = clock();
     FILE *file;
-    int BytesPerPixel = 3, width = 424, height = 636;
+    int BytesPerPixel = 3, width = 424, height = 636;               // Define the variables
     
     // argv[1] = "/Users/YJLee/Desktop/parrot_CFA.raw"
     // argv[2] = "/Users/YJLee/Desktop/parrot_bl.raw"
@@ -120,6 +119,9 @@ int main(int argc, const char * argv[])
     fwrite(ImageOutput, sizeof(unsigned char), (height)*(width)*BytesPerPixel, file);
     fclose(file);
     cout << "Bi-linear demosaic image is successfully saved" <<endl;
+    clock_t end = clock();
+    double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
+    printf("elapsed time: %f sec\n", elapsed_secs);
 
     return 0;
 }
