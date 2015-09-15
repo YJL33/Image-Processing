@@ -86,23 +86,23 @@ int main(int argc, const char * argv[])
     // Assign each pixel new RGB value, according to the most frequent combination in the window.
     unsigned char ImageOutput[height][width][BytesPerPixel];
     
-    for (int y = 0; y < height; y ++) {
-        for(int x = 0; x < width; x++) {
+    for (int x = 0; x < width; x ++) {
+        for(int y = 0; y < height; y++) {
             
-            int Window[]={0};                                                                // RGB combination of all pixels in the window
             int PixelCount=0;
+            int Window[PixelCount];                                                                // RGB combination of all pixels in the window
             
             for (int ch=0; ch<BytesPerPixel; ch++) {
-                for (int j= y-h; j<=y+h; j++) {                      // Apply the window on each one single Pixel
-                    for (int i= x-h; i<=x+h; i++) {
+                for (int i= x-h; i<=x+h; i++) {                      // Apply the window on each one single Pixel
+                    for (int j= y-h; j<=y+h; j++) {
                         if (j >= 0 && j <= height && i >= 0 && i <= width) {                              // Make sure pixel in both window and image
                             Window[PixelCount*BytesPerPixel+ch]= ImageQuantize[j][i][ch];                // Get all RGB combinations
+                            PixelCount++;
                         }
                     }
                 }
             }
-            
-            PixelCount = sizeof(Window)/3;
+            PixelCount = (int)PixelCount/3;
             cout << PixelCount << endl;
             
             for (int ch=0; ch< BytesPerPixel; ch++) {                                                 // Apply the most frequent color to the output pixel.
