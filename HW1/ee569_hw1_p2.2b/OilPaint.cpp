@@ -14,7 +14,7 @@
 //  Output:
 //  oil-painted effected raw-format image, argv[2];
 //
-//  Created by Yun-Jun Lee on 9/7/15.
+//  Created by Yun-Jun Lee.
 //  Copyright (c) 2015 USC. All rights reserved.
 
 #include <iostream>
@@ -27,7 +27,6 @@
 using namespace std;
 
 // this function outputs the corresponding component of most frequent "color" (RGB combination), based on Window size, effective pixels, and desired channel.
-
 unsigned char getComponentOfMostFrequentRGB(unsigned char RGBarray[] ,int pixels_number, int OutputChannel){
         
     int color_index[pixels_number];                         // Index each pixel's RGB combination
@@ -47,21 +46,16 @@ unsigned char getComponentOfMostFrequentRGB(unsigned char RGBarray[] ,int pixels
         }
         }
     }
-    //int color_count[pixels_number];
-    //for (int i=0; i<pixels_number; i++) {                      // Count each combination's appearance
-    //    color_count[i]=0;
-    //    for (int j=0; j<pixels_number; j++) {
-    //        if (RGBarray[i*3] == RGBarray[j*3] && RGBarray[i*3+1] == RGBarray[j*3+1] && RGBarray[i*3+2] == RGBarray[j*3+2]) {
-    //            color_count[i]++;}}}
-        
+    
     int max_appearance = 0 , most_frequent_combo = 0;
-    for (int i=0; i<pixels_number; i++) {                      // Find out the most frequent combination
+    for (int i=0; i<pixels_number; i++) {                   // Find out the most frequent combination
         if (color_count[i]>max_appearance) {
             max_appearance=color_count[i];
             most_frequent_combo=i;
         }
     }
     // cout << round(RGBarray[most_frequent_combo*3]) << "," << round(RGBarray[most_frequent_combo*3+1]) << "," << round(RGBarray[most_frequent_combo*3+2]) << "," << endl;
+    
     return (unsigned char)RGBarray[most_frequent_combo*3+OutputChannel];
 }
 

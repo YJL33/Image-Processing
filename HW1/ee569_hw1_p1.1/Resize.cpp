@@ -8,7 +8,7 @@
 //  Input: Raw square image, desired output file path, (Number of color channel), (input size), (output size)
 //  Output: Resized square image
 //
-//  Created by Yun-Jun Lee on 8/29/15.
+//  Created by Yun-Jun Lee.
 //  Copyright (c) 2015 USC. All rights reserved.
 
 #include <iostream>

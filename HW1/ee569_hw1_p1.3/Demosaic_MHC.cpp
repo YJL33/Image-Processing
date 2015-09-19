@@ -8,7 +8,7 @@
 //  Input: Raw image, desired output file path, (Number of color channel), (input height), (output width)
 //  Output: MHC demosaic image
 //
-//  Created by Yun-Jun Lee on 8/31/15.
+//  Created by Yun-Jun Lee.
 //  Copyright (c) 2015 USC. All rights reserved.
 
 #include <iostream>

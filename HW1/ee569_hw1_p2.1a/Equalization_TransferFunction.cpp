@@ -12,7 +12,7 @@
 //  Output:
 //  enhanced raw image, argv[2]; Transfer Function (txt), argv[3]
 //
-//  Created by Yun-Jun Lee on 9/3/15.
+//  Created by Yun-Jun Lee.
 //  Copyright (c) 2015 USC. All rights reserved.
 
 #include <iostream>
