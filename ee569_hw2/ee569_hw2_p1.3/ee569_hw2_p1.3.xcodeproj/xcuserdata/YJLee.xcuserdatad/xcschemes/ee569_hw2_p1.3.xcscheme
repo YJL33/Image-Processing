@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "57CCD1611BBC636600B1CD08"
-               BuildableName = "ee569_hw2_p1.1"
-               BlueprintName = "ee569_hw2_p1.1"
-               ReferencedContainer = "container:ee569_hw2_p1.1.xcodeproj">
+               BlueprintIdentifier = "57F2C4611BBC8BC700ED2F44"
+               BuildableName = "ee569_hw2_p1.3"
+               BlueprintName = "ee569_hw2_p1.3"
+               ReferencedContainer = "container:ee569_hw2_p1.3.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -32,10 +32,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "57CCD1611BBC636600B1CD08"
-            BuildableName = "ee569_hw2_p1.1"
-            BlueprintName = "ee569_hw2_p1.1"
-            ReferencedContainer = "container:ee569_hw2_p1.1.xcodeproj">
+            BlueprintIdentifier = "57F2C4611BBC8BC700ED2F44"
+            BuildableName = "ee569_hw2_p1.3"
+            BlueprintName = "ee569_hw2_p1.3"
+            ReferencedContainer = "container:ee569_hw2_p1.3.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -52,43 +52,23 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "57CCD1611BBC636600B1CD08"
-            BuildableName = "ee569_hw2_p1.1"
-            BlueprintName = "ee569_hw2_p1.1"
-            ReferencedContainer = "container:ee569_hw2_p1.1.xcodeproj">
+            BlueprintIdentifier = "57F2C4611BBC8BC700ED2F44"
+            BuildableName = "ee569_hw2_p1.3"
+            BlueprintName = "ee569_hw2_p1.3"
+            ReferencedContainer = "container:ee569_hw2_p1.3.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "&quot;/Users/YJLee/Desktop/part_a/grass_%02d.raw&quot;"
-            isEnabled = "NO">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "&quot;/Users/YJLee/Desktop/part_a/straw_%02d.raw&quot;"
-            isEnabled = "NO">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "&quot;/Users/YJLee/Desktop/part_a/unknown_%02d.raw&quot;"
-            isEnabled = "YES">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "36"
-            isEnabled = "NO">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "24"
+            argument = "&quot;/Users/YJLee/Desktop/hw2_output/p1.1/unknown_all.array&quot;"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "&quot;/Users/YJLee/Desktop/hw2_output/p1.1/grass_all.array&quot;"
-            isEnabled = "NO">
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "&quot;/Users/YJLee/Desktop/hw2_output/p1.1/straw_all.array&quot;"
-            isEnabled = "NO">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "&quot;/Users/YJLee/Desktop/hw2_output/p1.1/unknown_all.array&quot;"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>
@@ -105,10 +85,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "57CCD1611BBC636600B1CD08"
-            BuildableName = "ee569_hw2_p1.1"
-            BlueprintName = "ee569_hw2_p1.1"
-            ReferencedContainer = "container:ee569_hw2_p1.1.xcodeproj">
+            BlueprintIdentifier = "57F2C4611BBC8BC700ED2F44"
+            BuildableName = "ee569_hw2_p1.3"
+            BlueprintName = "ee569_hw2_p1.3"
+            ReferencedContainer = "container:ee569_hw2_p1.3.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

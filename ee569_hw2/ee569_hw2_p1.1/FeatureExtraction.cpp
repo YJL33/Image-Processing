@@ -2,7 +2,7 @@
 //  FeatureExtraction.cpp
 //  HW2_P1.1
 //
-//  Extract the features from sets of files: Apply Law's filters on 128x128 8-bit samples, and output the feature array.
+//  Extract the features from multiple files: Apply Law's filters on 128x128 8-bit samples, and output the feature array.
 //  The output will be 2-D array: [25 Law's features] * [number of samples (24 or 36)]
 //
 //  **** Need to execute 3 times to get: "grass feature array", "straw feature array", and "unknown feature array". *****
@@ -11,6 +11,7 @@
 //         [number of samples].......................................... 36 labeled samples or 24 unlabeled samples
 //         [output "feature array"]..................................... 2-D array: [25 Law's features] * [number of samples (24 or 36)]
 //
+//  In order to deal with multiple files, following steps are wrapped in a loop.
 //  There are three major steps, and used three corresponding functions:
 //  1. Remove DC part from image: calculate local mean and substract local mean from original array.
 //  2. Apply Law's filter: based on 5 kernels, derive the corresponding filter, then apply on zero-local-mean array.

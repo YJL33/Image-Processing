@@ -21,9 +21,10 @@
    calc_LocalEnergy.h
  
   1.2 Minimum mean distance classifier:
-   MinMeanDistClassifier.cpp  [class A (grass) mean-features].................. 2-D array obtained from 1.1
+   MinMeanDistClassifier.cpp  [unknown images' features]....................... 2-D array obtained from 1.1
+                              [class A (grass) mean-features].................. 2-D array obtained from 1.1
                               [class B (straw) mean-features].................. 2-D array obtained from 1.1
-                              [unknown images' features]....................... 2-D array obtained from 1.1
+                              
 
 
  

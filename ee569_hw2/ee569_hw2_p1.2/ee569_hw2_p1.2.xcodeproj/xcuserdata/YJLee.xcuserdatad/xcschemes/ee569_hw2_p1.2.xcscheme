@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "571B9B2C1BBA51520000BB9C"
+               BlueprintIdentifier = "57F2C44A1BBC89F000ED2F44"
                BuildableName = "ee569_hw2_p1.2"
                BlueprintName = "ee569_hw2_p1.2"
                ReferencedContainer = "container:ee569_hw2_p1.2.xcodeproj">
@@ -32,7 +32,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "571B9B2C1BBA51520000BB9C"
+            BlueprintIdentifier = "57F2C44A1BBC89F000ED2F44"
             BuildableName = "ee569_hw2_p1.2"
             BlueprintName = "ee569_hw2_p1.2"
             ReferencedContainer = "container:ee569_hw2_p1.2.xcodeproj">
@@ -52,7 +52,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "571B9B2C1BBA51520000BB9C"
+            BlueprintIdentifier = "57F2C44A1BBC89F000ED2F44"
             BuildableName = "ee569_hw2_p1.2"
             BlueprintName = "ee569_hw2_p1.2"
             ReferencedContainer = "container:ee569_hw2_p1.2.xcodeproj">
@@ -60,15 +60,15 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "/Users/YJLee/Desktop/part_a/unknown_all.array"
+            argument = "/Users/YJLee/Desktop/hw2_output/p1.1/unknown_all.array"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "/Users/YJLee/Desktop/part_a/grass_all.array"
+            argument = "/Users/YJLee/Desktop/hw2_output/p1.1/grass_all.array"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "/Users/YJLee/Desktop/part_a/straw_all.array"
+            argument = "/Users/YJLee/Desktop/hw2_output/p1.1/straw_all.array"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>
@@ -85,7 +85,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "571B9B2C1BBA51520000BB9C"
+            BlueprintIdentifier = "57F2C44A1BBC89F000ED2F44"
             BuildableName = "ee569_hw2_p1.2"
             BlueprintName = "ee569_hw2_p1.2"
             ReferencedContainer = "container:ee569_hw2_p1.2.xcodeproj">
