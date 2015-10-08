@@ -5,14 +5,15 @@
 //  OpenCV is required. From feature array obtained from previous step (1.1), we can apply a "min distance classifier"
 //  (We already know each array's dimension, but it's not yet necessary to adjust these feature's scale.)
 //
-//  Input: [unknown image features array]......................... 2-D array obtained from 1.1
-//         [class A (grass) mean-features array].................. 2-D array obtained from 1.1
-//         [class B (straw) mean-features array].................. 2-D array obtained from 1.1
+//  Input: [unknown image features array]......................... 2-D 25x24 array obtained from 1.1
+//         [class A (grass) mean-features array].................. 2-D 25x36 array obtained from 1.1
+//         [class B (straw) mean-features array].................. 2-D 25x36 array obtained from 1.1
 //
-//  Algorithm:
-//  step 1. For convenience, we read the array(step 0.) and convert the feature array into matrix.
-//  step 2. Apply calcCovarMatrix() on labeled samples, to get covariance matrix and class-mean, which are needed for next step.
-//  step 3. Apply Mahalanobis() on unknown samples, and compare the m.distance to both group for each unknown sample.
+//  Algorithm (w/o feature reduction):
+//  step 1.   For convenience, we read the array(step 0.) and convert the feature array into matrix.
+//  step 2.   Apply calcCovarMatrix() on labeled samples, to get covariance matrix and class-mean, which are needed for next step.
+//  step 3.   Apply Mahalanobis() on unknown samples, and compare the m.distance to both group for each unknown sample.
+//
 //
 //  Created by Yun-Jun Lee.
 //  Copyright (c) 2015 USC. All rights reserved.
@@ -111,7 +112,7 @@ int main(int argc, const char * argv[])
     // cout<<"25x25 straw cov: \n"<<cov_s<<endl<<endl;
     
     // Step 3. Calculate M-distance from 24 unknown image features to grass mean and straw mean, and then compare the distance one by one.
-    printf("compare M-distance for each unknown sample:\n (distance to grass mean, distance to straw mean) = (a, b)\n\n");
+    printf("Using 25 features to compare M-distance:\n (distance to grass, distance to straw) = (a, b)\n\n");
     
     // Get inverse covariance matrix (this is needed to calculate M-distance) with DECOMP_SVD for accuracy.
     // Further detail: http://goo.gl/pmDJgB

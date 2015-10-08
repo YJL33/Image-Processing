@@ -3,9 +3,9 @@
 //  HW2_P1.1
 //
 //  Extract the features from multiple files: Apply Law's filters on 128x128 8-bit samples, and output the feature array.
-//  The output will be 2-D array: [25 Law's features] * [number of samples (24 or 36)]
+//  The output will be 2-D array: [25 Law's features] * [number of samples (12 or 24 or 36)]
 //
-//  **** Need to execute 3 times to get: "grass feature array", "straw feature array", and "unknown feature array". *****
+//  **** Execute once, get feature arrays of all samples in such class. e.g. "feature array of 36 grass-labeled samples" *****
 //
 //  Input: [the full description of sets of files]...................... e.g. "../part_a/unknown_%02d.raw"
 //         [number of samples].......................................... 36 labeled samples or 24 unlabeled samples
@@ -68,9 +68,10 @@ int main(int argc, const char * argv[])
     unsigned char Imagedata[Size][Size];
     char filepath[42];
     
-    for (int filecount = 0; filecount < FileCount; filecount++) {
-        sprintf(filepath, argv[1], (char)(filecount+1));
-        cout << "\n\nExtracting image feature from:  \n" << filepath << " \n" << endl;
+    for (int filecount = 0; filecount < FileCount; filecount++) {                   // Adjust here when preparing training data and testing data (by applying a random #)
+        sprintf(filepath, argv[1], (char)(filecount+37));
+
+        cout << "\n\nExtracting image feature (non-adjusted scale) from:  \n" << filepath << " \n" << endl;
         
         if (!(file=fopen(filepath,"rb")))
         {

@@ -2,24 +2,25 @@
 //  FeatureReduction.cpp
 //  HW2_P1.3
 //
-//  This code applys PCA and LDA to reduce the number of features,
+//  This code applys PCA and LDA to reduce the number of features, and using the new feature for classification.
 //  based on unadjusted feature array obtained from 1.1.
 //
-//  Input: [unknown image's features array]....................... 2-D array obtained from 1.1
-//         [class A (grass) features array]....................... 2-D array obtained from 1.1
-//         [class B (straw) features array]....................... 2-D array obtained from 1.1
+//  Input: [unknown image samples]....................... 2-D 25x24 array obtained from 1.1
+//         [class A (grass) samples]..................... 2-D 25x36 array obtained from 1.1
+//         [class B (straw) samples]..................... 2-D 25x36 array obtained from 1.1
 //
-//  Algorithm of PCA:
-//  step 1. Convert the unknown samples' feature array into Matrices.
-//  step 2. Apply PCA for unlabeled group, reduce the feature into single one.
+//  Steps:
+//  0. Rescale and Convert the unknown sample's feature arrays into Matrices
 //
-//  Verify PCA: (use diagonal covariance matrix of unknown samples)
-//  step 1. Adjust the scale of each feature into [0,1] for unknown sample's feature array.
-//  step 2. Get diagonal covariance matrix, and compare with eigenvector
+//  (PCA part)
+//  1. Apply PCA for unlabeled samples, get mean, eigenvector and eigenvalue.
+//  2. Project all samples into PCA eigenvector, then reduce the feature matrices into 1-D matrices.
+//  3. Apply Mahalanobis binary classifier to label data
 //
-//  Algorithm of LDA:
-//  step 1. Adjust the scale of each feature into [0,1], for both labeled arrays.
-//  step 2. Get diagonal covariance matrix, and compare both diag. covariance matrice.
+//  (LDA part)
+//  4. "Relabel" labeled samples, and then apply LDA to get eigenvector.
+//  5. Reduce all sample matrices into 1-D matrices.
+//  6. Use LDA results to classify labeled data
 //
 //  Created by Yun-Jun Lee.
 //  Copyright (c) 2015 USC. All rights reserved.
@@ -48,6 +49,7 @@ int main(int argc, const char * argv[])
     clock_t begin = clock();
     FILE * file;
     int NumOfFeats = 25, unknownFileCount = 24, labeledFileCount = 36;         // Define the variables
+    double unknownFeatsRescale[NumOfFeats][unknownFileCount], grassFeatsRescale[NumOfFeats][labeledFileCount], strawFeatsRescale[NumOfFeats][labeledFileCount];
     
     // argv[1] = "/Users/YJLee/Desktop/unknown_all.array";
     // argv[2] = "/Users/YJLee/Desktop/grass_all.array";
@@ -88,35 +90,9 @@ int main(int argc, const char * argv[])
     fclose(file);
    
     //////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // Part 1 - PCA
-    printf("*****************PCA*****************\n");
-    
-    // Step 1. Convert these features arrays into matrices
-    Mat unknown_Mat = Mat(NumOfFeats, unknownFileCount, CV_64FC1, unknownFeats), unknown_MatT;
-    transpose(unknown_Mat, unknown_MatT);
-    
-    // Debug:
-    // cout<<"unknown samples: \n"<<unknown_MatT<<endl<<endl;
+    // Step 0. Adjust the scale of 25 features
 
-    // Step 2. Perform PCA analysis
-    PCA pca_unknown(unknown_MatT, Mat(), CV_PCA_DATA_AS_ROW, 1);
-    
-    Mat pca_unknown_mean = pca_unknown.mean.clone();
-    Mat pca_unknown_eigenvalues = pca_unknown.eigenvalues.clone();
-    Mat pca_unknown_eigenvectors_g = pca_unknown.eigenvectors.clone();
-    
-    cout<<"PCA mean: \n"<<pca_unknown_mean<<endl<<endl;
-    cout<<"PCA eigen-value: \n"<<pca_unknown_eigenvalues<<endl<<endl;
-    cout<<"PCA eigen-vector: \n"<<pca_unknown_eigenvectors_g<<endl<<endl;
-    
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // Part 2 - Verify PCA results
-    printf("*****************Verify PCA*****************\n ");
-    
-    // Step 1. Adjust the scale of 25 features
-    double unknownFeatsRescale[NumOfFeats][unknownFileCount], grassFeatsRescale[NumOfFeats][labeledFileCount], strawFeatsRescale[NumOfFeats][labeledFileCount];
     double FeatMax[NumOfFeats], FeatMin[NumOfFeats];
-    
     for (int ft = 0; ft < NumOfFeats; ft++) {
         FeatMax[ft] = 0;
         FeatMin[ft] = 1000000;
@@ -125,7 +101,7 @@ int main(int argc, const char * argv[])
                 FeatMax[ft] = max(grassFeats[ft][fc], strawFeats[ft][fc]);
             }
             if ( FeatMin[ft] > min(grassFeats[ft][fc], strawFeats[ft][fc])) {
-                FeatMin[ft] = max(grassFeats[ft][fc], strawFeats[ft][fc]);
+                FeatMin[ft] = min(grassFeats[ft][fc], strawFeats[ft][fc]);
             }
         }
         for (int fc = 0; fc < unknownFileCount; fc++) {
@@ -147,50 +123,171 @@ int main(int argc, const char * argv[])
             unknownFeatsRescale[ft][fc] = (unknownFeats[ft][fc]-FeatMin[ft])/FeatMax[ft];
         }
     }
-    // Convert the rescaled array into matrix
-    Mat unknown_MatR = Mat(NumOfFeats, unknownFileCount, CV_64FC1, unknownFeatsRescale), unknown_MatRT;
-    transpose(unknown_MatR, unknown_MatRT);
-   
-    // Step 2. Calculate the covariance matrix of unknown samples
-    Mat cov_ukR, inv_cov_ukR, mean_ukR;
-    cv::calcCovarMatrix(unknown_MatRT, cov_ukR, mean_ukR, CV_COVAR_NORMAL+CV_COVAR_ROWS);
     
-    Mat diag_cov_uk = cov_ukR.diag(0), diag_cov_ukT;
-    transpose(diag_cov_uk, diag_cov_ukT);
+    // Make these array into Matrices
+    Mat unknownMatRescaled = Mat(NumOfFeats, unknownFileCount, CV_64FC1, unknownFeatsRescale);   // 24 columns -> filecount, 25 rows -> features
+    Mat grassMatRescaled = Mat(NumOfFeats, labeledFileCount, CV_64FC1, grassFeatsRescale);
+    Mat strawMatRescaled = Mat(NumOfFeats, labeledFileCount, CV_64FC1, strawFeatsRescale);
     
-    cout<<"\nunknown samples' diagnonal covariance matrix: \n"<<diag_cov_ukT<<endl;
+    Mat unknownMatRescaledTranspose, grassMatRescaledTranspose, strawMatRescaledTranspose;    // 25 columns -> features, 24 rows -> filecount
+    transpose(unknownMatRescaled, unknownMatRescaledTranspose);
+    transpose(grassMatRescaled, grassMatRescaledTranspose);
+    transpose(strawMatRescaled, strawMatRescaledTranspose);
+    
+    // Step 1. Perform PCA analysis
+    
+    // Apply PCA and get eigenvectors
+    PCA pca_unknown(unknownMatRescaledTranspose, Mat(), CV_PCA_DATA_AS_ROW, 1);     
+    
+    Mat pca_unknown_mean = pca_unknown.mean.clone();
+    Mat pca_unknown_eigenvectors = pca_unknown.eigenvectors.clone();
+    Mat pca_unknown_eigenvalues = pca_unknown.eigenvalues.clone();
 
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // Part 3 - LDA
+    printf("*****************PCA*****************\n");
+    cout<<"PCA mean: \n"<<pca_unknown_mean<<endl<<endl;
+    cout<<"PCA eigen-vector: \n"<<pca_unknown_eigenvectors<<endl<<endl;
+    cout<<"PCA eigen-value: \n"<<pca_unknown_eigenvalues<<endl<<endl;
+    
+    // Step 2. Project the samples on eigenvectors, reduce the samples into 1-D array
+    double grass1DPCA[labeledFileCount], straw1DPCA[labeledFileCount], unknown1DPCA[unknownFileCount];
+    
+    for (int i=0; i<labeledFileCount; i++) {
+        Mat sample_grass = (grassMatRescaledTranspose(Range(i,i+1), Range::all()));
+        Mat sample_straw = (strawMatRescaledTranspose(Range(i,i+1), Range::all()));
+        grass1DPCA[i] = sample_grass.dot(pca_unknown_eigenvectors);
+        straw1DPCA[i] = sample_straw.dot(pca_unknown_eigenvectors);
+    }
+    for (int i=0; i<labeledFileCount; i++) {
+        Mat sample_unknown = (grassMatRescaledTranspose(Range(i,i+1), Range::all()));
+        unknown1DPCA[i] = sample_unknown.dot(pca_unknown_eigenvectors);
+    }
+    // Convert to Matrices
+    Mat unknown1DPCAMat = Mat(1, unknownFileCount, CV_64FC1, unknown1DPCA);
+    Mat grass1DPCAMat = Mat(1, labeledFileCount, CV_64FC1, grass1DPCA);
+    Mat straw1DPCAMat = Mat(1, labeledFileCount, CV_64FC1, straw1DPCA);
+    
+    Mat covUk1DPCA, inv_covUk1DPCA, meanUk1DPCA;
+    cv::calcCovarMatrix(unknown1DPCAMat, covUk1DPCA, meanUk1DPCA, CV_COVAR_NORMAL+CV_COVAR_COLS);
+
+    Mat covGrass1DPCA, inv_covGrass1DPCA, meanGrass1DPCA;
+    cv::calcCovarMatrix(grass1DPCAMat, covGrass1DPCA, meanGrass1DPCA, CV_COVAR_NORMAL+CV_COVAR_COLS);
+    
+    Mat covStraw1DPCA, inv_covStraw1DPCA, meanStraw1DPCA;
+    cv::calcCovarMatrix(straw1DPCAMat, covStraw1DPCA, meanStraw1DPCA, CV_COVAR_NORMAL+CV_COVAR_COLS);
+    
+    invert(covUk1DPCA, inv_covUk1DPCA, DECOMP_SVD);
+    invert(covGrass1DPCA, inv_covGrass1DPCA, DECOMP_SVD);
+    invert(covStraw1DPCA, inv_covStraw1DPCA, DECOMP_SVD);
+    printf("\n*****************Using PCA chosen features to classify labeled samples*****************\n");
+    
+    // Step 3. Classify labeled samples
+    
+    // Calculate the Mahalanobis Distance and compare
+    for (int i=0; i<unknownFileCount; i++) {
+        // Calculate
+        Mat sample_unknown = (unknown1DPCAMat.col(i));
+        // cout << sample_unknown << endl << endl << meanGrass1DPCA << endl << endl << inv_covUk1DPCA << endl;
+        double dist_to_grass = Mahalanobis(sample_unknown, meanGrass1DPCA, inv_covGrass1DPCA);
+        double dist_to_straw = Mahalanobis(sample_unknown, meanStraw1DPCA, inv_covStraw1DPCA);
+        
+        // Compare
+        if ( dist_to_grass > dist_to_straw) {
+            printf("unknown_%02d.raw is %s, (%.2f > %.2f)\n", (i+1), "straw", dist_to_grass, dist_to_straw);
+        }
+        else {
+            printf("unknown_%02d.raw is %s, (%.2f < %.2f)\n", (i+1), "grass", dist_to_grass, dist_to_straw);
+        }
+    }
+
+    // Step 4. Perform LDA analysis
+    
+    // Combine two labeled sample-sets and convert into Matrix
+    double labeledFeatsRescale[NumOfFeats][labeledFileCount*2];
+    for (int fc=0; fc<labeledFileCount; fc++) {
+        for (int ft=0; ft<NumOfFeats; ft++) {
+            labeledFeatsRescale[ft][fc] = grassFeatsRescale[ft][fc];
+            labeledFeatsRescale[ft][fc+labeledFileCount] = strawFeatsRescale[ft][fc];
+        }
+    }
+    Mat labeledMatRescaled = Mat(NumOfFeats, labeledFileCount*2, CV_64FC1, labeledFeatsRescale), labeledMatRescaledTranspose;
+    transpose(labeledMatRescaled, labeledMatRescaledTranspose);
+    
+    // Label these samples
+    vector<int>labels;
+    for(int i=0;i<labeledMatRescaledTranspose.rows;i++)
+    {
+        if(i<labeledMatRescaledTranspose.rows/2)
+        {
+            labels.push_back(0);              // Grass
+        }
+        else
+        {
+            labels.push_back(1);              // Straw
+        }
+    }
+    
+    // Apply LDA and get eigenvectors
+    LDA lda=LDA(labeledMatRescaledTranspose,labels);
+    Mat lda_labeled_eigenvectors=lda.eigenvectors().clone(), lda_labeled_eigenvectorsTranspose;
+    Mat lda_labeled_eigenvalue = lda.eigenvalues().clone();
+    transpose(lda_labeled_eigenvectors, lda_labeled_eigenvectorsTranspose);
+    
     printf("\n*****************LDA*****************\n");
     
-    // Step 1. Convert the rescaled arrays into matrices
-    Mat grass_MatR = Mat(NumOfFeats, labeledFileCount, CV_64FC1, grassFeatsRescale), grass_MatRT;
-    Mat straw_MatR = Mat(NumOfFeats, labeledFileCount, CV_64FC1, strawFeatsRescale), straw_MatRT;
+    cout<<"LDA eigen-vector: \n"<< lda_labeled_eigenvectorsTranspose << endl << endl;
+    cout<<"LDA eigen-value: \n" << lda_labeled_eigenvalue << endl << endl;
+    
+    // Step 5. Project the data on eigenvectors, reduce the samples into 1-D array
+    double grass1DLDA[labeledFileCount], straw1DLDA[labeledFileCount], unknown1DLDA[unknownFileCount];
+    
+    for (int i=0; i<labeledFileCount; i++) {
+        Mat sample_grass = (grassMatRescaledTranspose(Range(i,i+1), Range::all()));
+        Mat sample_straw = (strawMatRescaledTranspose(Range(i,i+1), Range::all()));
+        grass1DLDA[i] = sample_grass.dot(lda_labeled_eigenvectorsTranspose);
+        straw1DLDA[i] = sample_straw.dot(lda_labeled_eigenvectorsTranspose);
+    }
+    for (int i=0; i<labeledFileCount; i++) {
+        Mat sample_unknown = (grassMatRescaledTranspose(Range(i,i+1), Range::all()));
+        unknown1DLDA[i] = sample_unknown.dot(lda_labeled_eigenvectorsTranspose);
+    }
+    
+    // Convert to Matrices
+    Mat unknown1DLDAMat = Mat(1, unknownFileCount, CV_64FC1, unknown1DLDA);
+    Mat grass1DLDAMat = Mat(1, labeledFileCount, CV_64FC1, grass1DLDA);
+    Mat straw1DLDAMat = Mat(1, labeledFileCount, CV_64FC1, straw1DLDA);
+    
+    Mat covUk1DLDA, inv_covUk1DLDA, meanUk1DLDA;
+    cv::calcCovarMatrix(unknown1DLDAMat, covUk1DLDA, meanUk1DLDA, CV_COVAR_NORMAL+CV_COVAR_COLS);
+    
+    Mat covGrass1DLDA, inv_covGrass1DLDA, meanGrass1DLDA;
+    cv::calcCovarMatrix(grass1DLDAMat, covGrass1DLDA, meanGrass1DLDA, CV_COVAR_NORMAL+CV_COVAR_COLS);
+    
+    Mat covStraw1DLDA, inv_covStraw1DLDA, meanStraw1DLDA;
+    cv::calcCovarMatrix(straw1DLDAMat, covStraw1DLDA, meanStraw1DLDA, CV_COVAR_NORMAL+CV_COVAR_COLS);
+    
+    invert(covUk1DLDA, inv_covUk1DLDA, DECOMP_SVD);
+    invert(covGrass1DLDA, inv_covGrass1DLDA, DECOMP_SVD);
+    invert(covStraw1DLDA, inv_covStraw1DLDA, DECOMP_SVD);
+    printf("\n*****************Using LDA chosen features to classify labeled samples*****************\n");
 
-    transpose(grass_MatR, grass_MatRT);
-    transpose(straw_MatR, straw_MatRT);
+    // Step 6. Using LDA results to classify labeled and unknown samples
     
-    // Step 2. Calculate the "inter-feature" variance in both labeled groups (diagonal covariance matrix)
-    Mat cov_g, inv_cov_g, mean_g;
-    cv::calcCovarMatrix(grass_MatRT, cov_g, mean_g, CV_COVAR_NORMAL+CV_COVAR_ROWS);
-    //cov_g = cov_g/(grass_MatRT.rows-1);
-    
-    Mat cov_s, inv_cov_s, mean_s;
-    cv::calcCovarMatrix(straw_MatRT, cov_s, mean_s, CV_COVAR_NORMAL+CV_COVAR_ROWS);
-    //cov_s = cov_s/(straw_MatRT.rows-1);
-    
-    // Debug:
-    // cout<<"labeled grass mean: \n"<<mean_g<<endl<<endl;
-    // cout<<"labeled straw mean: \n"<<mean_s<<endl<<endl;
-    // cout<<"25x25 grass cov: \n"<<cov_g<<endl<<endl;
-    // cout<<"25x25 straw cov: \n"<<cov_s<<endl<<endl;
-    
-     Mat diag_cov_g = cov_g.diag(0), diag_cov_s = cov_s.diag(0), diag_cov_gT, diag_cov_sT;
-     transpose(diag_cov_g, diag_cov_gT), transpose(diag_cov_s, diag_cov_sT);
-    
-     cout<<"\ngrass diagnonal covariance matrix: \n"<<diag_cov_gT<<endl;
-     cout<<"\nstraw diagonal covariance matrix: \n"<<diag_cov_sT<<endl;
+    // Calculate the Mahalanobis Distance and compare
+    for (int i=0; i<unknownFileCount; i++) {
+        // Calculate
+        Mat sample_unknown = (unknown1DLDAMat.col(i));
+        // cout << sample_unknown << endl << endl << meanGrass1DPCA << endl << endl << inv_covUk1DPCA << endl;
+        double dist_to_grass = Mahalanobis(sample_unknown, meanGrass1DLDA, inv_covGrass1DLDA);
+        double dist_to_straw = Mahalanobis(sample_unknown, meanStraw1DLDA, inv_covStraw1DLDA);
+        
+        // Compare
+        if ( dist_to_grass < dist_to_straw) {
+            printf("unknown_%02d.raw is %s, (%.2f < %.2f)\n", (i+1), "grass", dist_to_grass, dist_to_straw);
+        }
+        else {
+            printf("unknown_%02d.raw is %s, (%.2f > %.2f)\n", (i+1), "straw", dist_to_grass, dist_to_straw);
+        }
+    }
     
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
