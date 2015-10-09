@@ -6,8 +6,8 @@
 //
 //  Input: [gradient image] [threshold] [output threshold image]
 //
-//  Steps:
-//  0. Rescale and Convert the Test sample's feature arrays into Matrices
+//  Load the image, assign the new value according to the threshold, and output the image.
+//
 //
 //
 //  Created by Yun-Jun Lee.
@@ -17,15 +17,15 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
-#include <opencv2/core/core.hpp>
-#include <opencv2/opencv.hpp>
-#include <opencv2/imgproc/imgproc.hpp>
-#include <opencv2/highgui/highgui.hpp>
+//#include <opencv2/core/core.hpp>
+//#include <opencv2/opencv.hpp>
+//#include <opencv2/imgproc/imgproc.hpp>
+//#include <opencv2/highgui/highgui.hpp>
 
 #ifndef SOBELTHRESHOLD
 #define SOBELTHRESHOLD
 
-using namespace cv;
+//using namespace cv;
 using namespace std;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -35,10 +35,10 @@ int main(int argc, const char * argv[])
     clock_t begin = clock();
     FILE * file;
     int Height = 321, Width = 481;        // Define the variables
-    int Threshold = 171;
+    int Threshold = 56;
     
     // argv[1] = "/Users/YJLee/Desktop/Farm_grey.raw";
-    // argv[2] = 171;
+    // argv[2] = 56;
     // argv[3] = "/Users/YJLee/Desktop/Farm_sobel.array";
     
     // Check for proper syntax
@@ -65,14 +65,14 @@ int main(int argc, const char * argv[])
     //////////////////////////////////////////////////////////////////////////////////////////////////////////
     
     // Make the array into Matrices
-    Mat InputMat = Mat(Height, Width, CV_8UC1, Imagedata);   // columns -> height, rows -> width
-    Mat InputMatTranspose;
-    transpose(InputMat, InputMatTranspose);
+//    Mat InputMat = Mat(Height, Width, CV_8UC1, Imagedata);   // columns -> height, rows -> width
+//    Mat InputMatTranspose;
+//    transpose(InputMat, InputMatTranspose);
     
     // Debug:
     // cout << absGradxMat << endl;
     
-    printf("From gradient image histogram, we know that:\nFor Farm.raw, the threshold of 10%% and 15%% are 186 and 161.\nFor Cougar.raw, the threshold of 10%% and 15%% are 140 and 131.\n(May varied depending on Sobel detector setting)\n");
+    printf("From gradient image histogram, we know that:\nFor Cougar.raw, the threshold of 10%% and 15%% are 56 and 46.\nFor Farm.raw, the threshold of 10%% and 15%% are 81 and 65.\n(May varied depending on Sobel detector setting)\n");
     printf("\nCurrent threshold: %d", Threshold);
  
     unsigned char SobelThreshold[Height][Width];
@@ -80,18 +80,20 @@ int main(int argc, const char * argv[])
     // Thresholding & inversing black <-> white
     for (int y=0; y<Height; y ++) {
         for (int x=0; x<Width; x ++) {
-            if ((unsigned char)(InputMatTranspose.at<unsigned char>(x, y)) < Threshold) {
+//            if ((unsigned char)(InputMatTranspose.at<unsigned char>(x, y)) < Threshold) {
+            if (Imagedata[y][x] < Threshold) {
+
                 SobelThreshold[y][x] = 255;
             }
             else{
-                SobelThreshold[y][x] = (unsigned char)(255-(InputMatTranspose.at<unsigned char>(x, y)));
+                SobelThreshold[y][x] = (unsigned char)(255-(Imagedata[y][x]));
             }
         }
     }
     
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     if (!(file=fopen(argv[3],"wb"))) {
-        cout << "Error: unable to save x-gradient image" << endl;
+        cout << "Error: unable to save threshold image" << endl;
         exit(1);
     }
     fwrite(SobelThreshold, sizeof(unsigned char), Height*Width, file);

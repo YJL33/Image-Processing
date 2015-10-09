@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		57F137E11BC22B6A009B2902 /* getGradientImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 57F137E01BC22B6A009B2902 /* getGradientImage.cpp */; };
+		5789EBCF1BC7283800C703D7 /* getGradient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5789EBCD1BC7283800C703D7 /* getGradient.cpp */; };
+		57F137E11BC22B6A009B2902 /* getSobelImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 57F137E01BC22B6A009B2902 /* getSobelImage.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -23,8 +24,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		5789EBCD1BC7283800C703D7 /* getGradient.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = getGradient.cpp; sourceTree = "<group>"; };
+		5789EBCE1BC7283800C703D7 /* getGradient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = getGradient.h; sourceTree = "<group>"; };
 		57F137D61BC22B25009B2902 /* ee569_hw2_p2.a.1 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ee569_hw2_p2.a.1; sourceTree = BUILT_PRODUCTS_DIR; };
-		57F137E01BC22B6A009B2902 /* getGradientImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = getGradientImage.cpp; sourceTree = "<group>"; };
+		57F137E01BC22B6A009B2902 /* getSobelImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = getSobelImage.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,7 +44,9 @@
 		57F137CD1BC22B25009B2902 = {
 			isa = PBXGroup;
 			children = (
-				57F137E01BC22B6A009B2902 /* getGradientImage.cpp */,
+				5789EBCD1BC7283800C703D7 /* getGradient.cpp */,
+				5789EBCE1BC7283800C703D7 /* getGradient.h */,
+				57F137E01BC22B6A009B2902 /* getSobelImage.cpp */,
 				57F137D71BC22B25009B2902 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -110,7 +115,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				57F137E11BC22B6A009B2902 /* getGradientImage.cpp in Sources */,
+				5789EBCF1BC7283800C703D7 /* getGradient.cpp in Sources */,
+				57F137E11BC22B6A009B2902 /* getSobelImage.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

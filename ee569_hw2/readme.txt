@@ -8,10 +8,8 @@
  
  OpenCV 3.0.0 is required.
  (1.b.2) libsvm tools are required, contributed by Chih-Chung Chang and Chih-Jen Lin, LIBSVM.
- (2.a.3) Non-maximal suppression is applied with nms.cpp, contributed by Hilton Bristow and Willow Garage Inc.
 
-
- g++ -o xxx xxx.cpp
+ g++ -o xxx xxx.cpp ooo.cpp
  ./program_name [input_parameters]...
 
 
@@ -44,7 +42,7 @@
                               [class B (straw) feature array]....................... 25x36 array obtained from 1.1
   
   (b)
-  1.b.0 Sample preparation:
+  1.b.0 Sample preparation (for PCA/LDA):
    SamplePreparation.cpp 
                               [training Negative sample set 1] ..................... 25x12 array obtained from 1.1
                               [training Negative sample set 2] ..................... 25x12 array obtained from 1.1
@@ -76,17 +74,19 @@
  
  Problem. 2 Edge Detection
  (a) Sobel Edge Detector and Non Maximal Suppression:
-  convertColorToGray.cpp      ./program_name  input_image.raw     gray_image.raw    [BytesPerPixel = 3]  [Width = 481]  [Height = 321]
+  convertColorToGray.cpp     ./program_name input_image.raw gray_image.raw [BytesPerPixel = 3] [Width = 481] [Height = 321]
   
-  getGradientImage.cpp        ./program_name  gray_image.raw      gradient_image.raw
+  getSobelImage.cpp          ./program_name gray_image.raw  gradient_image.raw
+  getGradient.cpp
   
-  SobelThreshold.cpp          ./program_name  gradient_image.raw  [threshold=0~255]  contour_threshold_image.raw
+  SobelThreshold.cpp         ./program_name  gradient_image.raw  [threshold=0~255]  contour_threshold_image.raw
   
-  applynms.cpp                ./program_name  contour_threshold_image.raw   contour_nms_image.raw
+  applynms.cpp               ./program_name  contour_threshold_image.raw   contour_nms_image.raw
   nms.cpp
   nms.hpp
    
  (b) Canny Edge Detector
+  applyCanny.cpp  (need opencv)          ./program_name 
  (c) Structured Edge
  (d) Performance Evaluation
 

@@ -30,7 +30,7 @@ int main(int argc, const char * argv[])
     clock_t begin = clock();
     FILE * file;
     int Height = 321, Width = 481;        // Define the variables
-    int NMSWindowSize = 1;
+    int NMSWindowSize = 2;
     
     // argv[1] = "/Users/YJLee/Desktop/Farm_Sobel_th10.raw";
     // argv[2] = "/Users/YJLee/Desktop/Farm_Sobel_th10_nms.raw";
@@ -76,7 +76,7 @@ int main(int argc, const char * argv[])
     
     for (int y=0; y<Height; y++){
         for (int x=0; x<Width; x++){
-            ImageAddFrame[y+2][x+2] = ImagedataInv[y][x];
+            ImageAddFrame[y+NMSWindowSize][x+NMSWindowSize] = ImagedataInv[y][x];
         }
     } 
     // copy upper and lower boundaries from itself
@@ -121,16 +121,21 @@ int main(int argc, const char * argv[])
             else
             {
                 NMSImage[y-NMSWindowSize][x-NMSWindowSize] = local_max;
-                //cout << (x-2) << ","<< (y-2)<< "," << round(NMSImage[y-2][x-2]) << endl;
+//                cout << (x-2) << ","<< (y-2)<< "," << round(NMSImage[y-2][x-2]) << endl;
             }
         }
     }
         
-    // Thresholding & inversing black <-> white
+    // inversing black <-> white & drawing contour
     unsigned char NMSImageInv[Height][Width];
-    for (int y=0; y<Height; y ++) {
-        for (int x=0; x<Width; x ++) {
-            NMSImageInv[y][x] = (unsigned char)(255 - NMSImage[y][x]);
+    
+    for (int y =0; y<Height; ++y) {
+        for (int x=0; x<Width; ++x) {
+            if (NMSImage[y][x] == 0) {
+                NMSImageInv[y][x] = 255;
+            }
+            else
+                NMSImageInv[y][x] = 0;
         }
     }
 

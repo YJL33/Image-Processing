@@ -60,11 +60,11 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "&quot;/Users/YJLee/Desktop/20153_EE569/ee569_code/ee569_hw2/ee569_hw2_p2.a.2/Cougar_gradient.raw&quot;"
+            argument = "&quot;/Users/YJLee/Desktop/20153_EE569/ee569_code/ee569_hw2/ee569_hw2_p2.a.2/Cougar_Sobel.raw&quot;"
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "140"
+            argument = "56"
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
@@ -72,7 +72,7 @@
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "131"
+            argument = "46"
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
@@ -80,24 +80,24 @@
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "&quot;/Users/YJLee/Desktop/20153_EE569/ee569_code/ee569_hw2/ee569_hw2_p2.a.2/Farm_gradient.raw&quot;"
+            argument = "&quot;/Users/YJLee/Desktop/20153_EE569/ee569_code/ee569_hw2/ee569_hw2_p2.a.2/Farm_Sobel.raw&quot;"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "186"
-            isEnabled = "NO">
+            argument = "81"
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "&quot;/Users/YJLee/Desktop/20153_EE569/ee569_code/ee569_hw2/ee569_hw2_p2.a.2/Farm_Sobel_th10.raw&quot;"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "65"
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "161"
-            isEnabled = "YES">
-         </CommandLineArgument>
-         <CommandLineArgument
             argument = "&quot;/Users/YJLee/Desktop/20153_EE569/ee569_code/ee569_hw2/ee569_hw2_p2.a.2/Farm_Sobel_th15.raw&quot;"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
       </CommandLineArguments>
       <AdditionalOptions>
