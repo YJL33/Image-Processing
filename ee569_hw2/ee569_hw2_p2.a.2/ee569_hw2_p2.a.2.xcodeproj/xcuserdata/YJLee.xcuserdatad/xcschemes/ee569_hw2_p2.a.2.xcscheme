@@ -61,15 +61,15 @@
       <CommandLineArguments>
          <CommandLineArgument
             argument = "&quot;/Users/YJLee/Desktop/20153_EE569/ee569_code/ee569_hw2/ee569_hw2_p2.a.2/Cougar_Sobel.raw&quot;"
-            isEnabled = "NO">
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "56"
-            isEnabled = "NO">
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "&quot;/Users/YJLee/Desktop/20153_EE569/ee569_code/ee569_hw2/ee569_hw2_p2.a.2/Cougar_Sobel_th10.raw&quot;"
-            isEnabled = "NO">
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "46"
@@ -81,15 +81,15 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "&quot;/Users/YJLee/Desktop/20153_EE569/ee569_code/ee569_hw2/ee569_hw2_p2.a.2/Farm_Sobel.raw&quot;"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "81"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "&quot;/Users/YJLee/Desktop/20153_EE569/ee569_code/ee569_hw2/ee569_hw2_p2.a.2/Farm_Sobel_th10.raw&quot;"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "65"

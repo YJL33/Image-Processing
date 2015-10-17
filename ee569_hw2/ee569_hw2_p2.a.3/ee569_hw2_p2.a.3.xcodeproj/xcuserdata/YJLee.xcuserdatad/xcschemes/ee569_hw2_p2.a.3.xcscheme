@@ -85,10 +85,18 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "&quot;/Users/YJLee/Desktop/20153_EE569/ee569_code/ee569_hw2/ee569_hw2_p2.a.3/Farm_Sobel_th15.raw&quot;"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "&quot;/Users/YJLee/Desktop/20153_EE569/ee569_code/ee569_hw2/ee569_hw2_p2.a.3/Farm_Sobel_th15_nms.raw&quot;"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "&quot;/Users/YJLee/Desktop/20153_EE569/ee569_code/ee569_hw2/ee569_hw2_p2.a.3/Farm_Canny_1.raw&quot;"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "&quot;/Users/YJLee/Desktop/20153_EE569/ee569_code/ee569_hw2/ee569_hw2_p2.a.3/Canny/F_nms1.raw&quot;"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>

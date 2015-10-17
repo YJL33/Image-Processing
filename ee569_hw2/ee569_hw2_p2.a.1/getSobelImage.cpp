@@ -139,8 +139,8 @@ int main(int argc, const char * argv[])
     for (int y=0; y<Height; y++) {
         for (int x=0; x<Width; x++) {
             double normalize_x, normalize_y;
-            normalize_x = 255*((SobelImageX[y][x]-min_x)/max_x);
-            normalize_y = 255*((SobelImageY[y][x]-min_y)/max_y);
+            normalize_x = 255*((SobelImageX[y][x]-min_x)/(max_x-min_x));
+            normalize_y = 255*((SobelImageY[y][x]-min_y)/(max_y-min_y));
             PreGradImage[y][x] = sqrt(pow(normalize_x, 2) + pow(normalize_y, 2));
             PreSobelImage[y][x] = sqrt(pow(SobelImageX[y][x], 2) + pow(SobelImageY[y][x], 2));
 
@@ -160,11 +160,11 @@ int main(int argc, const char * argv[])
         }
     }
     
-    // Normalize Sobel gradient image
+    // Normalize Sobel and gradient image
     for (int y=0; y<Height; y++) {
         for (int x=0; x<Width; x++) {
-            GradImage[y][x] = (unsigned char)(255*((PreGradImage[y][x]-min_sb)/max_sb));
-            SobelImage[y][x] = (unsigned char)(255*((PreSobelImage[y][x]-min_sb)/max_sb));
+            GradImage[y][x] = (unsigned char)(255*((PreGradImage[y][x]-min_gd)/(max_gd-min_gd)));
+            SobelImage[y][x] = (unsigned char)(255*((PreSobelImage[y][x]-min_sb)/(max_sb-min_sb)));
  //       cout << x << "," << y << "," << round(SobelImage[y][x]) << endl;
         }
     }

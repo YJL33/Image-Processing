@@ -6,14 +6,17 @@
  Compiled on OS X 10.9.5 with gcc
 
  
- OpenCV 3.0.0 is required.
  (1.b.2) libsvm tools are required, contributed by Chih-Chung Chang and Chih-Jen Lin, LIBSVM.
+ (2.b) OpenCV 3.0.0 is required.
+ (2.c, 2.d) "Structured Edge Detection Toolbox" is required.
+
 
  g++ -o xxx xxx.cpp ooo.cpp
  ./program_name [input_parameters]...
 
 
  Problem. 1 Texture analysis and classification
+
  (a)
   1.1 Feature extraction:                          
    FeatureExtraction.cpp  
@@ -41,7 +44,7 @@
                               [class A (grass) feature array]....................... 25x36 array obtained from 1.1
                               [class B (straw) feature array]....................... 25x36 array obtained from 1.1
   
-  (b)
+ (b)
   1.b.0 Sample preparation (for PCA/LDA):
    SamplePreparation.cpp 
                               [training Negative sample set 1] ..................... 25x12 array obtained from 1.1
@@ -71,27 +74,47 @@
                               [output Training data] ............................... required format for libsvm/tool
                               [output Testing data] ................................ required format for libsvm/tool
 
+   further analysis can be easily done using libsvm: (http://ntu.csie.org/~piaip/svm/svm_tutorial.html)
+
+   svm-train.cpp              svm-train [options] training_set_file [model_file]
+   svm-predict.cpp            svm-predict [options] test_file model_file output_file
+
  
  Problem. 2 Edge Detection
- (a) Sobel Edge Detector and Non Maximal Suppression:
-  convertColorToGray.cpp     ./program_name input_image.raw gray_image.raw [BytesPerPixel = 3] [Width = 481] [Height = 321]
+
+ (a) Sobel Edge Detector and Non Maximal Suppression
+
+  2.a.0 Convert Color image to gray image:
+   convertColorToGray.cpp     ./program_name input_image.raw gray_image.raw [BytesPerPixel = 3] [Width = 481] [Height = 321]
   
-  getSobelImage.cpp          ./program_name gray_image.raw  gradient_image.raw
-  getGradient.cpp
+  2.a.1 Get Sobel image (and gradient image):
+   getSobelImage.cpp          ./program_name  gray_image.raw   gradient_image.raw
+   getGradient.cpp
   
-  SobelThreshold.cpp         ./program_name  gradient_image.raw  [threshold=0~255]  contour_threshold_image.raw
+  2.a.2 Threshold the Sobel image:
+   SobelThreshold.cpp         ./program_name  gradient_image.raw  [threshold=0~255]  contour_threshold_image.raw
+   inverseBlackAndWhite.cpp   ./program_name  input_image.raw  output_image.raw
   
-  applynms.cpp               ./program_name  contour_threshold_image.raw   contour_nms_image.raw
-  nms.cpp
-  nms.hpp
+  2.a.3 Apply Non-Maximal-Suppression:
+   applynms.cpp               ./program_name  contour_threshold_image.raw   contour_nms_image.raw
+   nms.cpp
+   nms.hpp
+   inverseBlackAndWhite.cpp   ./program_name  input_image.raw  output_image.raw
    
  (b) Canny Edge Detector
-  applyCanny.cpp  (need opencv)          ./program_name 
- (c) Structured Edge
- (d) Performance Evaluation
 
- Problem. 3 Image Segmentation
- (a) Mean Shift + Superpixel Segmentation
- (b) Color Palettes Generation
- (c) Segmentation Result Evaluation
+  2.b Apply Edge Dector:
+   applyCanny.cpp             ./program_name 
+   inverseBlackAndWhite.cpp   ./program_name  input_image.raw  output_image.raw
+
+ (c) Structured Edge
+
+  2.c Apply Structure Edge Detector:
+   applySE.m                  (modified from edgeDemo.m)   save "Cougar.raw" and "Farm.raw" as "*.png" then input
+
+ (d) Performance Evaluation
+   getGroundTruth.cpp         ./program_name  input_image.raw  output_image.raw
+   evaluatePerformance        (modified from edgeDemo.m)
+
+ 
  

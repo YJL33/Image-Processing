@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>9E1E645A-4427-4829-97E1-557AD71B8F3F</string>
+	<key>IDESourceControlProjectName</key>
+	<string>ee569_hw2_p2.b.1</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>18780162BCB3B89D3401B859926917F0D4504BDF</key>
+		<string>https://github.com/YJL33/USC-EE569.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>ee569_hw2/ee569_hw2_p2.b/ee569_hw2_p2.b.1.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>18780162BCB3B89D3401B859926917F0D4504BDF</key>
+		<string>../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/YJL33/USC-EE569.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>18780162BCB3B89D3401B859926917F0D4504BDF</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>18780162BCB3B89D3401B859926917F0D4504BDF</string>
+			<key>IDESourceControlWCCName</key>
+			<string>ee569_code</string>
+		</dict>
+	</array>
+</dict>
+</plist>

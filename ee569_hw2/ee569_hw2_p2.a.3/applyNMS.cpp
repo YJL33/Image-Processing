@@ -30,7 +30,7 @@ int main(int argc, const char * argv[])
     clock_t begin = clock();
     FILE * file;
     int Height = 321, Width = 481;        // Define the variables
-    int NMSWindowSize = 2;
+    int NMSWindowSize = 1;
     
     // argv[1] = "/Users/YJLee/Desktop/Farm_Sobel_th10.raw";
     // argv[2] = "/Users/YJLee/Desktop/Farm_Sobel_th10_nms.raw";

@@ -77,16 +77,16 @@ int main(int argc, const char * argv[])
  
     unsigned char SobelThreshold[Height][Width];
     
-    // Thresholding & inversing black <-> white
+    // Thresholding
     for (int y=0; y<Height; y ++) {
         for (int x=0; x<Width; x ++) {
 //            if ((unsigned char)(InputMatTranspose.at<unsigned char>(x, y)) < Threshold) {
             if (Imagedata[y][x] < Threshold) {
 
-                SobelThreshold[y][x] = 255;
+                SobelThreshold[y][x] = 0;
             }
             else{
-                SobelThreshold[y][x] = (unsigned char)(255-(Imagedata[y][x]));
+                SobelThreshold[y][x] = Imagedata[y][x];
             }
         }
     }
