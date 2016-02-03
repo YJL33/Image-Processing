@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "57853B1D1BA9035700FFD86B"
-               BuildableName = "Octize"
+               BuildableName = "Quantize"
                BlueprintName = "Octize"
                ReferencedContainer = "container:ee569_hw1_p2.2a.xcodeproj">
             </BuildableReference>
@@ -33,7 +33,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "57853B1D1BA9035700FFD86B"
-            BuildableName = "Octize"
+            BuildableName = "Quantize"
             BlueprintName = "Octize"
             ReferencedContainer = "container:ee569_hw1_p2.2a.xcodeproj">
          </BuildableReference>
@@ -53,7 +53,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "57853B1D1BA9035700FFD86B"
-            BuildableName = "Octize"
+            BuildableName = "Quantize"
             BlueprintName = "Octize"
             ReferencedContainer = "container:ee569_hw1_p2.2a.xcodeproj">
          </BuildableReference>
@@ -102,7 +102,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "57853B1D1BA9035700FFD86B"
-            BuildableName = "Octize"
+            BuildableName = "Quantize"
             BlueprintName = "Octize"
             ReferencedContainer = "container:ee569_hw1_p2.2a.xcodeproj">
          </BuildableReference>

@@ -1,5 +1,5 @@
- EE569 Homework Assignment #3
- Date: Oct 18, 2015 
+ EE569 Homework Assignment #4
+ Date: Nov 13, 2015 
  Name: Yun-Jun Lee 
  USCID: 6742472861 
  E-mail: yunjunle@usc.edu 
@@ -10,44 +10,13 @@
  ./program_name [input_parameters]...
 
 
- Problem. 1 Image General Modification
+ Problem. 1 Optical Character Recognition (OCR)
+ (a) Decision Tree
+  Pre-processing.cpp               Identify and output the normalized character image                 ./program name    [imput image]     [output directory]
 
- (a) Swirl Effect
-  Swirl.cpp                       Apply swirl effect on 512x512 Kate.raw image.                ./program name    [imput image]     [output image]
-  
- (b) Perspective Transformation & Imaging Geometry
-  1.b Pre-Processing:
-  getCubeAndPerspectiveView.m     Put 200x200 RGB different baby images on 5 sides of cube in assigned order, and then get perspective view. 
-                                  [Input:  change the file path at Line 19, 37, 55, 73, 91]
-                              
- 
- Problem. 2 Digital Halftoning
 
- (a) Dithering
-  1.a.1 Using Index = 4:
-  Dithering_I4.cpp   Output dithered 512x512 mandrill.raw (0 & 255)          ./program name    [imput image]     [output image]
-
-  1.a.2 Using Index = 8:
-  Dithering_I8.cpp   Output dithered 512x512 mandrill.raw (0 & 255)          ./program name    [imput image]     [output image]
-
-  1.a.3 Screen with 4 intensity levels:
-  Dithering_T4.cpp   Output dithered 512x512 mandrill.raw (4 levels)         ./program name    [imput image]     [output image]
-
- (b) Error Diffusion
-  1.b.1 Using Floyd-Steinberg's method:
-  ErrorDiffusion_FS.cpp            Apply error-diffusion filter on mandrill.raw                ./program name    [imput image]     [output image]
-
-  1.b.2 Using Jarvis, Judice, and Ninke's (JJN) method:
-  ErrorDiffusion_JJN.cpp           Apply error-diffusion filter on mandrill.raw                ./program name    [imput image]     [output image]
-
-  1.b.3 Using Stucki's method:
-  ErrorDiffusion_Stucki.cpp        Apply error-diffusion filter on mandrill.raw                ./program name    [imput image]     [output image]
-
- (c) Scalar Color Halftoning
-  ScalarHalftoning.cpp             Apply error-diffusion filter on sailboat.raw (color image)  ./program name    [imput image]     [output image]
-
- (d) Vector Color Halftoning
-  VectorHalftoning.cpp             Apply error-diffusion filter on sailboat.raw (color image)  ./program name    [imput image]     [output image]
+ (b) OCR Testing: Simple Cases
+ (c) OCR Testing: Advanced Cases
 
  Problem. 3 Morphological Processing
 
